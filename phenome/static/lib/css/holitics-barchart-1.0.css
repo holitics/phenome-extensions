@@ -1,0 +1,86 @@
+svg {
+    font: 14px sans-serif;
+    shape-rendering: crispEdges;
+}
+  
+.tooltip {
+	position: absolute;
+	pointer-events: none;
+}
+
+.d3-tip {
+      line-height: 1;
+      padding: 6px;
+      background: rgba(255,255,255, 0.8);
+      color: #000;
+      border-radius: 4px;
+      font-size: 12px;
+}
+ 
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+      box-sizing: border-box;
+      display: inline;
+      font-size: 10px;
+      width: 100%;
+      line-height: 1;
+      color: #f3e905;
+      content: "\25BC";
+      position: absolute;
+      text-align: center;
+}
+ 
+/* Style northward tooltips specifically */
+.d3-tip.n:after {
+      margin: -2px 0 0 0;
+      top: 100%;
+      left: 0;
+}
+
+.axis .domain {
+  display: none;
+}
+
+.bar_text {
+	fill: steelblue;
+}
+
+.bar_text_good {
+	fill: #0cf50c;
+}
+
+.bar_text_bad {
+	fill: red;
+}
+
+.bar {
+	fill: steelblue;
+}
+
+.bar:hover {
+	fill: brown;
+}
+
+.axis {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.axisLight text{
+  fill: #e5e6e6;
+} 
+
+
+path.domain {
+  stroke: none;
+}
+ 
+.y .tick line {
+  stroke: #ddd;
+}

@@ -1,0 +1,413 @@
+/*
+ holitics-statusmap-1.0.css
+ Copyright (c) 2019 Nicholas Saparoff, Phenome Project
+*/
+
+#old_browser_msg {
+	display: none;
+	float: right;
+	clear: right;
+	width: 500px;
+	color: white;
+	background: #D53E4F;
+	border: 1px solid #9E0142;
+	padding: 5px;
+	margin-right: 24px;
+}
+
+#scale {
+	float: right;
+}
+
+#scale ul {
+	list-style-type: none;
+}
+
+#scale li {
+	float: left;
+	width: 15px;
+	height: 15px;
+}
+
+#vis {
+	margin: auto;
+	padding-bottom: 30px;
+}
+
+#tiles {
+	font-size: 12px;
+	clear: both;
+	margin: auto;
+}
+
+#tiles th {
+	vertical-align: top;
+	padding: 3px;
+	color: #ccc;
+}
+
+#tiles tr th {
+	padding-top: 12px;
+}
+
+#tiles tr:first-child th {
+	padding-top: 3px;
+}
+
+#tiles td {
+	-webkit-perspective: 1000;
+	padding: 0px;
+}
+
+#tiles .tile {
+	width: 38px;
+	height: 38px;
+	position: relative;
+	-webkit-transform-style: preserve-3d;
+	-webkit-transition: 0.7s;
+}
+
+#tiles .tile_large {
+	width: 152px;
+	height: 152px;
+	position: relative;
+	-webkit-transform-style: preserve-3d;
+	-webkit-transition: 0.7s;
+}
+
+.face {
+	position: absolute;
+	-webkit-backface-visibility: hidden;
+	width: 36px;
+	height: 36px;
+	background: #3c3b3b;
+	border: 0px solid #1f1f1f;
+}
+
+.face_large {
+	position: absolute;
+	-webkit-backface-visibility: hidden;
+	text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+	width: 144px;
+	height: 144px;
+	background: #3c3b3b;
+	padding: 10px 10px;
+	color:	#ffffff;
+	border: 0px solid #1f1f1f;
+	background-repeat: no-repeat !important;
+    background-position-y: 85px !important;
+    background-position-x: 5px !important;
+}
+
+#tiles td.sel .face {
+	border-color: black;
+}
+
+#tiles td.sel .face_large {
+	border-color: black;
+}
+
+.face.hidden {
+	display: none;
+}
+
+.face_large.hidden {
+	display: none;
+}
+
+#tiles td.dim .screen {
+	opacity: 0.6;
+}
+
+.face.back {
+	-webkit-transform: rotateY(180deg);
+}
+.face_large.back {
+	-webkit-transform: rotateY(180deg);
+}
+
+/* Fix the status display for Firefox browsers, the "flip" effect is un-needed and breaks on FF */
+@-moz-document url-prefix() {
+	.face.back {
+		-webkit-transform: rotateY(0deg);
+	}
+	.face_large.back {
+		-webkit-transform: rotateY(0deg);
+	}
+}
+
+.tile .screen {
+	background: #3c3b3b;
+	opacity: 0.0;
+	width: 36px;
+	height: 36px;
+	position: absolute;
+	z-index: 1337;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	border: 0px solid white;
+}
+
+.tile_large .screen {
+	background: #3c3b3b;
+	opacity: 0.0;
+	width: 152px;
+	height: 152px;
+	position: absolute;
+	z-index: 1337;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	border: 0px solid white;
+}
+
+#legend {
+	-- clear: left;
+	width: 260px;
+	color: #777;
+	margin: auto;
+	background: #333333;
+	border: 1px solid #4e4c4c;
+	overflow: inherit;
+	padding: 5px 5px 5px 5px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	font-size: 11px;
+	line-height: 11px;
+}
+
+#legend ul {
+	list-style-type: none;
+	clear: both;
+}
+
+#legend li {
+	float: left;
+	margin-right: 1px;
+	width: 14px;
+	height: 14px;
+}
+
+#legend p {
+	margin-top: -15px;
+}
+
+#legend p.more {
+	float: right;
+}
+
+#legend p.less {
+	float: left;
+}
+
+#pc2mob {
+	float: left;
+}
+
+#pc2mob path {
+	stroke: white;
+	stroke-width: 2px;
+}
+
+#pc2mob.all path.pc {
+	fill: #ddd;
+}
+
+#pc2mob.all path.mob {
+	fill: #ccc;
+}
+
+#pc2mob.pc path.pc {
+	fill: #444;
+}
+
+#pc2mob.pc path.mob {
+	fill: #ddd;
+}
+
+#pc2mob.mob path.pc {
+	fill: #ddd;
+}
+
+#pc2mob.mob path.mob {
+	fill: #444;
+}
+
+#pc2mob ul, #ie8_percents {
+	list-style-type: none;
+	margin-top: 20px 0 0 45px;
+	width: 150px;
+}
+
+#pc2mob li, #ie8_percents li {
+	float: left;
+	width: 75px;
+	text-align: center;
+}
+
+#pc2mob li span, #ie8_percents li span {
+	display: block;
+	font-size: 24px;
+	line-height: 24px;
+}
+
+#pc2mob.all li.pc, #ie8_percents li.pc {
+	color: #ccc;
+}
+
+#pc2mob.all li.mob, #ie8_percents li.mob {
+	color: #aaa;
+}
+
+#pc2mob.pc li.pc {
+	color: #444;
+}
+
+#pc2mob.pc li.mob {
+	color: #999;
+}
+
+#pc2mob.mob li.pc {
+	color: #999;
+}
+
+#pc2mob.mob li.mob {
+	color: #444;
+}
+
+#pc2mob svg {
+	margin: 0 70px 0 0;
+}
+
+#header h1, #header p#subtitle {
+	margin-left: 18px;
+}
+
+#footer {
+	clear: both;
+	margin: 25px !important;
+}
+
+h2 {
+	margin-top: -2px;
+	font-size: 28px;
+	line-height: 28px;
+	margin-bottom: 30px;
+	width: 250px;
+	margin-left: -50px;
+	z-index: -1337;
+	text-align: center;
+}
+
+p.subtitle {
+	font-size: 13px;
+	line-height: 19px;
+	padding-top: 2px;
+	color: #999;
+}
+
+html.ie8 #vis, html.ie9 #vis {
+	height: 285px !important;
+}
+
+html.ie8 #tiles td.sel .face {
+	border-color: white !important;
+}
+html.ie8 #tiles td.sel .face_large {
+	border-color: white !important;
+}
+
+#ie8_percents {
+	display: none;
+}
+
+#ie8_percents.ff3 {
+	display: block;
+}
+
+html.ie8 #ie8_percents, #ie8_percents.ff3 {
+	display: block !important;
+	position: absolute;
+	left: 20px;
+	top: 510px;
+}
+
+.popover {
+	z-index: 1000;
+	width: 400px;
+	max-width: 900px;
+}
+
+.popover-content h4 {
+  color: #00A1FF;
+}
+.popover-content h4 small {
+  color: black;
+}
+.popover-content button.btn-primary {
+  color: #00A1FF;
+  border-color:#00A1FF;
+  background:white;
+}
+
+.popover-content button.btn-default {
+  color: gray;
+  border-color:gray;
+}
+
+/* 11 buckets dark to light - then red 
+/* 0 is an empty square
+/* 1 is represented by a "missing" square which is light and looks "disabled"
+/* 2-11 are like health scores 1-10 (10 is bad)  */
+
+.healthstatusdark .q0-11 {
+	background: #252525;
+}
+
+.healthstatusdark .q1-11 {
+	background: #232323;
+	border: 4px dashed #424242;
+}
+
+.healthstatusdark .q2-11 {
+	background: #5c5d71a1;
+	border: 1px solid #6363637a;
+}
+
+.healthstatusdark .q3-11 {
+	background: #132073;
+}
+
+.healthstatusdark .q4-11 {
+	background: #1c2c82;
+}
+
+.healthstatusdark .q5-11 {
+	background: #23379a;
+}
+
+.healthstatusdark .q6-11 {
+	background: #1d4da2;
+}
+
+.healthstatusdark .q7-11 {
+	background: #1c5fb2;
+}
+
+.healthstatusdark .q8-11 {
+	background: #1085d6;
+}
+
+.healthstatusdark .q9-11 {
+	background: #41b0fc;
+}
+
+.healthstatusdark .q10-11 {
+	background: #6fe2f1;
+}
+
+.healthstatusdark .q11-11 {
+	background: #fb0000;
+}
+

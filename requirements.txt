@@ -1,0 +1,4 @@
+
+# PACKAGES REQUIRED
+
+phenome-core>=0.1.380

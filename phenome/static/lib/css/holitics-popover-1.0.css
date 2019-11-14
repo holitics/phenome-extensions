@@ -1,0 +1,27 @@
+.popover-content-container {
+	width: 350px;
+	max-width: 700px;
+}
+
+.popover-content img {
+	margin-right: 10px;
+}
+
+.popover-content h4 {
+  color: #00A1FF;
+}
+
+.popover-content h4 small {
+  color: black;
+}
+
+.popover-content button.btn-primary {
+  color: #00A1FF;
+  border-color:#00A1FF;
+  background:white;
+}
+
+.popover-content button.btn-default {
+  color: gray;
+  border-color:gray;
+}

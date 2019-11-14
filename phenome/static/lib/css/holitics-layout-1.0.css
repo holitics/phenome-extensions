@@ -1,0 +1,192 @@
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+  background-color: #181918;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  line-height: 60px; /* Vertically center the text there */
+  background-color: #f5f5f5;
+}
+
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+
+body > .container {
+  padding: 60px 15px 0;
+}
+
+.footer > .container {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.important {
+    color: #428cd6;
+}
+
+code {
+  font-size: 80%;
+}
+
+#infotable {
+	font-size: 20px;
+	clear: both;
+	margin: auto;
+}
+
+#infotable th {
+	vertical-align: top;
+	color: #ccc;
+}
+
+#infotable td {
+	padding-right:25px;
+	padding-bottom:10px;
+}
+
+.stats-badge {
+	font-size: 0.9rem;
+	text-align: center;
+}
+
+/* Dialog Box CSS */
+
+.dialog-content-container {
+	min-width: 300px;
+	max-width: 800px;
+	width: 100%;
+}
+
+.dialog-content img {
+	margin-right: 10px;
+}
+
+.dialog-content h4 {
+  	color: #00A1FF;
+	font-size: calc(0.7vw + 0.7vh);
+}
+.dialog-content h4 small {
+	color: black;
+	font-size: calc(0.5vw + 0.5vh);
+}
+.dialog-content h5 {
+	font-size: 0rem;
+}
+.dialog-content h5 small {
+	color: black;
+	font-size: calc(0.35vw + 0.35vh);
+}
+
+/* adjust for small / mobile devices */
+@media (max-width : 900px) {
+	.dialog-content h4 {
+		font-size: calc(2vw + 2vh);
+	}
+	.dialog-content h4 small {
+		font-size: calc(1.5vw + 1.5vh);
+	}
+	.dialog-content h5 {
+		font-size: 0rem;
+	}
+	.dialog-content h5 small {
+		font-size: calc(1vw + 1vh);
+	}
+}
+
+.subclasstype_icons {
+	margin-right: 15px;
+	width: 50px;
+	height: 50px;
+}
+
+.add-model-link {
+	margin-left: 50px;
+}
+
+.dialog-content br {
+   display: block;
+   margin: 2px 0;
+}
+
+.dialog-content button.btn-disable {
+  color: gray;
+  border-color:gray;
+}
+
+.dialog-content button {
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+.dialog-content ul.dropdown-menu {
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.dropdown-menu {
+	padding-right: 5px;
+	padding-left: 5px;
+}
+
+.dropdown-header {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	margin-bottom: 10px;
+	background-color: #f5f5f5;
+}
+
+.modal-content {
+	z-index: 1060;
+}
+
+.obj_dialog_relation_item {
+	padding-bottom: 10px;
+}
+
+.obj_dialog_toolbar {
+	text-align:center;
+	margin-bottom:0.0rem!important;
+}
+
+.object_dialog_header_canvas {
+	right: -10px;
+	position: absolute;
+    touch-action: none;
+    z-index: -1;
+}
+
+.row {
+    margin-right: -10px;
+    margin-left: -10px;
+}
+
+.line_separator {
+	padding-top: 10px;
+    margin-top: 10px;
+	border-top: 1px solid #e9ecef;
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-top-color: rgb(233, 236, 239);
+}
+
+.form-row {
+	padding-bottom: 10px;
+}
+
+#relations_power_source {
+	padding-bottom: 0px;
+}

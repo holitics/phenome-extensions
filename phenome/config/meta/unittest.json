@@ -1,0 +1,187 @@
+{
+  "file_description": "UNIT TEST configuration file. Prepend all IDs with TEST_",
+  "phenome_app_id": 0,
+  "phenome_app_version": "0.1.0",
+  "phenome_developer_id": 0,
+  "enums": {
+      "enum": [
+          {	"id": "_MODEL_SUBCLASSTYPES_",
+              "description": "SubClassTypes for all Object Models. EDITS CAN BREAK MODELS. ADDS ARE SAFE! For other applications, put custom models into custom json file starting at ID 1000000",
+              "values": [
+                  { "key": "TEST_SENSOR_SUBTYPE", "value": "10000", "attributes": [{ "description": "Testable Sensor", "icon": ""}] }
+              ]
+          }
+      ]
+  },
+  "object_models": {
+    "object_model": [
+      {
+        "id": "TEST_SENSOR",
+        "description": "Test Sensor for Unit Tests",
+        "model_classtype": "ENVIRONMENT_SENSOR",
+        "model_classname": "test.supporting.test_sensor.TestSensor",
+        "model_subclasstype": "TEST_SENSOR_SUBTYPE",
+        "phenome": {
+          "property_model": [
+            { "name": "_macaddress", "description": "MAC Address", "property_type": "CONFIGURATION", "value_type": "TEXT", "default": "aa.bb.cc.dd.ee.ff", "attributes": [{ "show_in_ui": "true", "required": 1}]},
+            { "name": "temp_warning", "description": "Warning level for Temperature of Sensor (degrees)", "value_type": "INTEGER", "default": "80", "attributes": [{ "show_in_ui": "true", "required": 0}]}
+          ],
+          "action_model": [
+            { "name": "test_multi_args",	"description": "Test Multiple Arguments",   "value_type": "TEXT", "default": "", "attributes": [{ "classname": "self", "methodname":"test_multiple_arguments", "method_arguments":"arg1, arg2, arg3", "delay_secs": "5", "create_method": "True"}]}
+          ],
+          "relation_model": [
+            { "name": "temp_sensor_dependency", "description": "dependency on another object's temperature sensor values", "value_type": "TEXT", "default": "", "attributes": [
+              {   "classname": "phenome.extensions.dependencychecks.generic_dependencycheck.GenericDependencyCheck",
+                  "relation_type": "REMOTE_SENSOR",
+                  "relation_hasattr": "power_state",
+                  "related_model":"ROOT_PDU",
+                  "repeat_delay_secs": "30",
+                  "notify": "false",
+                  "test_for_state_1": "object.temperature>80 and relation.power_state==2",
+                  "test_for_state_2": "object.temperature<75 and relation.power_state==1",
+                  "behavior_on_state_1": "relation.power_state = 1",
+                  "behavior_on_state_2": "setattr(relation, 'power_state', 2)",
+                  "message_on_state_1": "'Powering OFF ({}) due to high temperature ({}) reported by ({})'.format(relation.unique_id,object.temperature,object.unique_id)",
+                  "message_on_state_2": "'Powering ON ({}) due to lower temperature ({}) reported by ({})'.format(relation.unique_id,object.temperature,object.unique_id)",
+                  "state_1_is_error": "true",
+                  "state_2_is_error": "false",
+                  "ignore_timedelay": "true"
+              }
+            ]}
+          ]
+        }
+      },
+      {
+        "id": "TEST_SENSOR_CASCADE",
+        "description": "Test Sensor for Unit Tests",
+        "model_classtype": "ENVIRONMENT_SENSOR",
+        "model_classname": "test.supporting.test_sensor.TestSensor",
+        "model_subclasstype": "TEST_SENSOR_SUBTYPE",
+        "phenome": {
+          "property_model": [
+            { "name": "_macaddress", "description": "MAC Address", "property_type": "CONFIGURATION", "value_type": "TEXT", "default": "aa.bb.cc.dd.ee.ff", "attributes": [{ "show_in_ui": "true", "required": 1}]}
+          ],
+          "action_model": [
+            { "name": "test_multi_args",	"description": "Test Multiple Arguments",   "value_type": "TEXT", "default": "", "attributes": [{ "classname": "self", "methodname":"test_multiple_arguments", "method_arguments":"arg1, arg2, arg3", "delay_secs": "5", "create_method": "True"}]}
+          ],
+          "relation_model": [
+            { "name": "temp_sensor_cascading_dependency", "description": "dependency on another object's temperature sensor values", "value_type": "TEXT", "default": "", "attributes": [
+              {   "classname": "phenome.extensions.dependencychecks.generic_dependencycheck.GenericDependencyCheck",
+                  "relation_type": "REMOTE_SENSOR",
+                  "relation_hasattr": "power_state",
+                  "related_model":"TEST_PDU_CASCADE",
+                  "repeat_delay_secs": "30",
+                  "notify": "false",
+                  "test_for_state_1": "object.temperature>80 and relation.power_state==2",
+                  "behavior_on_state_1": "relation.test_change_power_state(1)",
+                  "message_on_state_1": "'Powering OFF ({}) due to high temperature ({}) reported by ({})'.format(relation.unique_id,object.temperature,object.unique_id)",
+                  "state_1_is_error": "true",
+                  "ignore_timedelay": "true"
+              }
+            ]}
+
+          ]
+        }
+      },
+      {
+        "id": "TEST_PDU_WRONG_CLASSNAME",
+        "description": "Test PDU for Unit Tests",
+        "model_classtype": "POWER_DISTRIBUTION_UNIT",
+        "model_classname": "test.supporting.test_sensor.TestSensor",
+        "model_subclasstype": "TEST_PDU_SUBTYPE",
+        "phenome": {
+          "property_model": [
+            { "name": "_ipaddress", "description": "IP Address", "property_type": "CONFIGURATION", "value_type": "TEXT", "default": "aa.bb.cc.dd", "attributes": [{ "show_in_ui": "true", "required": 1}]}
+          ],
+          "action_model": [
+            { "name": "test_multi_args",	"description": "Test Multiple Arguments",   "value_type": "TEXT", "default": "", "attributes": [{ "classname": "self", "methodname":"test_multiple_arguments", "method_arguments":"arg1, arg2, arg3", "delay_secs": "5", "create_method": "True"}]}
+          ],
+          "relation_model": [
+            { "name": "temp_sensor_dependency", "description": "dependency on another object's temperature sensor values", "value_type": "TEXT", "default": "", "attributes": [
+              {   "classname": "phenome.extensions.dependencychecks.generic_dependencycheck.GenericDependencyCheck",
+                  "relation_type": "DEPENDS_ON",
+                  "relation_hasattr": "power_state",
+                  "related_model":"TEST_SENSOR",
+                  "repeat_delay_secs": "30",
+                  "notify": "false",
+                  "test_for_state_1": "relation.temperature>80 and object.power_state==1",
+                  "behavior_on_state_1": "object.power_state = 3",
+                  "message_on_state_1": "'Power CYCLE ({}) due to high temperature ({}) reported by ({})'.format(object.unique_id,relation.temperature,relation.unique_id)",
+                  "state_1_is_error": "true",
+                  "ignore_timedelay": "true"
+              }
+            ]}
+          ]
+        }
+      },
+      {
+        "id": "TEST_PDU_CASCADE",
+        "description": "Test PDU for Unit Tests",
+        "model_classtype": "POWER_DISTRIBUTION_UNIT",
+        "model_classname": "test.supporting.test_pdu.TestPDU",
+        "model_subclasstype": "TEST_PDU_SUBTYPE",
+        "phenome": {
+          "property_model": [
+            { "name": "_ipaddress", "description": "IP Address", "property_type": "CONFIGURATION", "value_type": "TEXT", "default": "aa.bb.cc.dd", "attributes": [{ "show_in_ui": "true", "required": 1}]}
+          ],
+          "action_model": [
+            { "name": "test_multi_args",	"description": "Test Multiple Arguments",   "value_type": "TEXT", "default": "", "attributes": [{ "classname": "self", "methodname":"test_multiple_arguments", "method_arguments":"arg1, arg2, arg3", "delay_secs": "5", "create_method": "True"}]},
+            { "name": "test_change_power_state", "description": "Test Changing Power State",   "value_type": "TEXT", "default": "", "attributes": [{ "classname": "self", "methodname":"test_cps", "method_arguments":"arg1", "delay_secs": "1", "create_method": "True", "alter_state":"power_state", "state_enum":"_STATE_TYPES_"}]}
+          ],
+          "relation_model": [
+            { "name": "temp_sensor_cascading_dependency", "description": "dependency on another object's temperature sensor values", "value_type": "TEXT", "default": "", "attributes": [
+              {   "classname": "phenome.extensions.dependencychecks.generic_dependencycheck.GenericDependencyCheck",
+                  "relation_type": "DEPENDS_ON",
+                  "relation_hasattr": "power_state",
+                  "related_model":"TEST_SENSOR_CASCADE",
+                  "repeat_delay_secs": "30",
+                  "notify": "false",
+                  "test_for_state_1": "relation.temperature>80 and object.power_state==1",
+                  "behavior_on_state_1": "object.power_state = 3",
+                  "message_on_state_1": "'Power CYCLE ({}) due to high temperature ({}) and my power state being OFF - reported by ({})'.format(object.unique_id,relation.temperature,relation.unique_id)",
+                  "state_1_is_error": "true",
+                  "ignore_timedelay": "true"
+              }
+            ]}
+          ]
+        }
+      },
+      {
+        "id": "TEST_SENSOR_CIRCULAR_DEPENDENCY",
+        "description": "Test Sensor for Unit Tests",
+        "model_classtype": "ENVIRONMENT_SENSOR",
+        "model_classname": "test.supporting.test_sensor.TestSensor",
+        "model_subclasstype": "TEST_SENSOR_SUBTYPE",
+        "phenome": {
+          "property_model": [
+            { "name": "_macaddress", "description": "MAC Address", "property_type": "CONFIGURATION", "value_type": "TEXT", "default": "aa.bb.cc.dd.ee.ff", "attributes": [{ "show_in_ui": "true", "required": 1}]}
+          ],
+          "action_model": [
+            { "name": "test_multi_args",	"description": "Test Multiple Arguments",   "value_type": "TEXT", "default": "", "attributes": [{ "classname": "self", "methodname":"test_multiple_arguments", "method_arguments":"arg1, arg2, arg3", "delay_secs": "5", "create_method": "True"}]}
+          ],
+          "relation_model": [
+            { "name": "temp_sensor_circular_dependency", "description": "dependency on another object's temperature sensor values", "value_type": "TEXT", "default": "", "attributes": [
+              {   "classname": "phenome.extensions.dependencychecks.generic_dependencycheck.GenericDependencyCheck",
+                  "relation_type": "REMOTE_SENSOR",
+                  "relation_hasattr": "power_state",
+                  "related_model":"TEST_PDU_CASCADE",
+                  "repeat_delay_secs": "30",
+                  "notify": "false",
+                  "test_for_state_1": "object.temperature>80 and relation.power_state==2",
+                  "test_for_state_2": "object.temperature>80 and relation.power_state==3",
+                  "behavior_on_state_1": "relation.test_change_power_state(1)",
+                  "behavior_on_state_2": "relation.test_change_power_state(1)",
+                  "message_on_state_1": "'Powering OFF ({}) due to high temperature ({}) reported by ({})'.format(relation.unique_id,object.temperature,object.unique_id)",
+                  "message_on_state_2": "'Powering OFF ({}) due to high temperature ({}) reported by ({})'.format(relation.unique_id,object.temperature,object.unique_id)",
+                  "state_1_is_error": "true",
+                  "state_2_is_error": "true",
+                  "ignore_timedelay": "true"
+              }
+            ]}
+
+          ]
+        }
+      }
+    ]
+  }
+}

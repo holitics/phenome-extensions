@@ -1,0 +1,78 @@
+{
+    "file_description": "Core system infrastructure configuration",
+    "phenome_app_id": 0,
+    "phenome_app_version": "0.1.0",
+	"phenome_developer_id": 0,
+  	"enums": {
+    	"enum": [
+    		{	"id": "_MODEL_SUBCLASSTYPES_",
+          		"description": "SubClassTypes for all Object Models. EDITS CAN BREAK MODELS. ADDS ARE SAFE! For other applications, put custom models into custom json file starting at ID 1000000",
+				"values": [
+					{ "key": "SMART_PDU", "value": "100", "attributes": [{ "description": "Smart PDU"}] },
+					{ "key": "SMART_PLUG", "value": "101", "attributes": [{ "description": "Smart Plug"}] },
+					{ "key": "SMART_SWITCH", "value": "102", "attributes": [{ "description": "Smart Switch"}] },
+					{ "key": "NETWORK_SWITCH", "value": "103", "attributes": [{ "description": "Network Switch"}] }
+				]
+       		}
+        ]
+    },
+    "object_models": {
+        "object_model": [
+          {
+            "id": "GENERIC_NETWORK_SWITCH",
+            "description": "Generic Managed Switch",
+            "model_classtype": "GENERIC_ROUTER",
+            "model_subclasstype": "NETWORK_SWITCH",
+            "model_classname": "phenome.extensions.classtypes.OBJECT.powered_object.PoweredObject",
+            "phenome": {
+                "property_model": [
+					{ "name": "_ipaddress", "description": "IP Address", "property_type": "CONFIGURATION", "value_type": "TEXT", "default": "a.b.c.d", "attributes": [{ "show_in_ui": "true", "required": 1, "add_only":"true", "units":"ipaddress"}]},
+                    { "name": "username", "description": "Username to authenticate", "property_type": "CONFIGURATION", "value_type": "TEXT", "default": "username", "attributes": [{ "show_in_ui": "true", "required": 1, "add_only":"false"}]},
+                    { "name": "password", "description": "Password to authenticate",  "property_type": "CONFIGURATION", "value_type": "TEXT", "default": "password", "attributes": [{ "show_in_ui": "true", "required": 1, "encrypt": 1, "add_only":"false"}]}
+                ]
+            }
+          },
+          {
+            "id": "PDU_DLI_UniversalC13",
+            "description": "Digital Loggers Universal Power Controller",
+            "model_classtype": "POWER_DISTRIBUTION_UNIT",
+            "model_classname": "phenome.extensions.classtypes.POWER_DISTRIBUTION_UNIT.pdu_dli.PDU_DLI_UniversalC13",
+            "model_subclasstype": "SMART_PDU",
+            "phenome": {
+                "property_model": [
+					{ "name": "_ipaddress", "description": "IP Address", "property_type": "CONFIGURATION", "value_type": "TEXT", "default": "a.b.c.d", "attributes": [{ "show_in_ui": "true", "required": 1, "add_only":"true", "units":"ipaddress"}]},
+                    { "name": "username", "description": "Username to authenticate", "property_type": "CONFIGURATION", "value_type": "TEXT", "default": "username", "attributes": [{ "show_in_ui": "true", "required": 1, "add_only":"false"}]},
+                    { "name": "password", "description": "Password to authenticate",  "property_type": "CONFIGURATION", "value_type": "TEXT", "default": "password", "attributes": [{ "show_in_ui": "true", "required": 1, "encrypt": 1, "add_only":"false"}]}
+                ]
+            },
+            "properties": {
+                "property": [
+                    { "name": "icon", "value": "dli-universal-pdu.png" }
+                ]
+            }
+          },
+          {
+            "id": "SMARTPLUG_TPLink",
+            "description": "TP-Link SmartPlug",
+            "model_classtype": "POWER_DISTRIBUTION_UNIT",
+            "model_classname": "phenome.extensions.classtypes.POWER_DISTRIBUTION_UNIT.smartplug_tplink.SMARTPLUG_TPLink",
+            "model_subclasstype": "SMART_PLUG",
+            "phenome": {
+                "property_model": [
+					{ "name": "_ipaddress", "description": "IP Address", "property_type": "CONFIGURATION", "value_type": "TEXT", "default": "a.b.c.d", "attributes": [{ "show_in_ui": "true", "required": 1, "add_only":"true", "units":"ipaddress"}]},
+					{ "name": "port", "description": "Communication Port", "property_type": "CONFIGURATION", "value_type": "INTEGER", "default": "9999", "attributes": [{ "show_in_ui": "true", "required": 1, "add_only":"false"}]}
+                ]
+            },
+            "properties": {
+                "//": "There is only one outlet on a TP-Link, so specify 1 outlet and connect to itself",
+                "property": [
+                    { "name": "outlets", "value": "1"},
+                    { "name": "connected_outlet", "value": "1"},
+                    { "name": "icon", "value": "pdu_smartplug_tplink_hs100.png" }
+                ]
+            }
+          }
+        ]
+    }
+
+}

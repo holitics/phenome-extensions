@@ -1,0 +1,49 @@
+	<form id="form_add_relation" class="needs-validation" method="GET" action="/api/v1/add_relation_request" novalidate>
+		<input type='hidden' name='_object_id' id='_object_id' value='{{object_id}}'>
+		<input type='hidden' name='_relation_type' id='_relation_type' value='1000'>
+		<div class="form-row">
+			<div class="col-sm-7">
+				<div class="form-group">
+					<select class="form-control" name="_relation_id" id="_relation_id" required>
+					  <option value="">Choose power source</option>
+					</select>
+					<div class="invalid-feedback">Choose a power source</div>
+				</div>
+			</div>
+			<div class="col-sm-3">
+				<div class="form-group">
+					<select class="form-control" name="_details" id="_details" required>
+						<option value="">Outlet</option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						<option value="6">6</option>
+						<option value="7">7</option>
+						<option value="8">8</option>
+						<option value="9">9</option>
+						<option value="10">10</option>
+						<option value="11">11</option>
+						<option value="12">12</option>
+						<option value="13">13</option>
+						<option value="14">14</option>
+						<option value="15">15</option>
+						<option value="16">16</option>
+						<option value="17">17</option>
+						<option value="18">18</option>
+						<option value="19">19</option>
+						<option value="20">20</option>
+						<option value="21">21</option>
+						<option value="22">22</option>
+						<option value="23">23</option>
+						<option value="24">24</option>
+					</select>
+					<div class="invalid-feedback">Choose outlet</div>
+				</div>
+			</div>
+			<div class="col-sm-2">
+				<button class="btn btn-primary btn-sm" id="submit" type="submit" style="float:right;height:38px;">Save</button>	  
+			</div>
+	  	</div>
+	</form>

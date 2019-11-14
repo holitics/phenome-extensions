@@ -1,0 +1,41 @@
+{
+    "file_description": "Core system sensor configuration",
+    "phenome_app_id": 0,
+    "phenome_app_version": "0.1.0",
+	"phenome_developer_id": 0,
+  	"enums": {
+    	"enum": [
+    		{	"id": "_MODEL_SUBCLASSTYPES_",
+          		"description": "SubClassTypes for all Object Models. EDITS CAN BREAK MODELS. ADDS ARE SAFE! For other applications, put custom models into custom json file starting at ID 1000000",
+				"values": [
+					{ "key": "BLUETOOTH_SENSOR", "value": "1000", "attributes": [{ "description": "Bluetooth Sensor"}] }
+				]
+       		}
+        ]
+    },
+    "object_models": {
+        "object_model": [
+            {
+              "id": "SENSOR_RuuviTag",
+              "description": "RuuviTag Sensor Beacon",
+              "model_classtype": "ENVIRONMENT_SENSOR",
+              "model_subclasstype": "BLUETOOTH_SENSOR",
+              "model_classname": "phenome.extensions.classtypes.ENVIRONMENT_SENSOR.ruuvitag.bt_ruuvitag.BT_RUUVITAG",
+              "model_classname_processor": "phenome.extensions.classtypes.ENVIRONMENT_SENSOR.ruuvitag.bt_ruuvitag.BT_RUUVITAG_Processor",
+              "phenome": {
+                  "property_model": [
+                      { "name": "_macaddress", "description": "MAC Address", "property_type": "CONFIGURATION", "value_type": "TEXT", "default": "aa.bb.cc.dd.ee.ff", "attributes": [{ "show_in_ui": "true", "required": 1, "add_only":"true", "units":"macaddress"}]}
+                  ]
+              },
+              "properties": {
+                  "property": [
+                      { "name": "temp_warning", "value": "80" },
+                      { "name": "temp_error", "value": "100" },
+                      { "name": "healthcheck_temps", "value": "phenome.extensions.sensorchecks.temps.TempCheck"},
+                      { "name": "icon", "value": "sensor_ruuvitag.png" }
+                  ]
+              }
+            }
+        ]
+    }
+}

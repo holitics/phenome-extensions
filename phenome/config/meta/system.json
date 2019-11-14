@@ -1,0 +1,362 @@
+{
+	"file_description": "Core system configuration",
+  	"phenome_app_id": 0,
+	"phenome_app_name": "core",
+    "phenome_app_title": "holitics_core_agent",
+    "phenome_app_version": "0.0.1",
+    "phenome_app_description": "Open Source Platform Agent for core holitics applications",
+	"phenome_app_classname": "phenome_core.core.api",
+	"phenome_developer_id": 0,
+  	"enums": {
+    	"enum": [
+    		{	"id": "_MODEL_CLASSTYPES_",
+          		"description": "ClassTypes for all Object Models. Make sure other SYSTEM JSON files do not collide. EDITS CAN BREAK MODELS. ADDS ARE SAFE! For other applications, put custom models into custom json file starting at ID 1000000",
+				"values": [
+					{ "key": "OBJECT", "value": "0", "attributes": [{ "description": "Object", "icon": ""}] },
+					{ "key": "GENERIC_DEVICE", "value": "1", "attributes": [{ "description": "Generic Device"}] },
+					{ "key": "ENVIRONMENT_SENSOR", "value": "2", "attributes": [{ "description": "Environment Sensor"}]  },
+					{ "key": "POWER_DISTRIBUTION_UNIT", "value": "3", "attributes": [{ "description": "Power Distribution Unit"}]  },
+					{ "key": "GENERIC_SYSTEM", "value": "4", "attributes": [{ "description": "Generic System"}] },
+					{ "key": "GENERIC_ROUTER", "value": "5", "attributes": [{ "description": "Generic Router / Switch"}] },
+					{ "key": "CUSTOM_MODELS_START_AFTER_THIS_NUMBER", "value": "999999", "attributes": [{ "description": "Custom Models Start After This Number", "add_dialog": "false"}]  }
+				]
+       		},
+    		{	"id": "_MODEL_SUBCLASSTYPES_",
+          		"description": "Sub-ClassTypes for all Object Models - additional specification of class for objects. Make sure other SYSTEM JSON files do not collide. EDITS CAN BREAK MODELS. ADDS ARE SAFE! For other applications, put custom models into custom json file starting at ID 1000000",
+				"values": [
+					{ "key": "NONE", "value": "0", "attributes": [{ "description": "", "icon": ""}] },
+					{ "key": "CORE_AGENT", "value": "1", "attributes": [{ "description": "", "icon": ""}] },
+					{ "key": "SENSOR_AGENT", "value": "2", "attributes": [{ "description": "", "icon": ""}] },
+					{ "key": "CUSTOM_SUBCLASSTYPES_START_AFTER_THIS_NUMBER", "value": "999999", "attributes": [{ "description": "Custom Sub-Models Start After This Number", "add_dialog": "false"}]  }
+				]
+       		},
+    		{	"id": "_PROPERTY_TYPES_",
+          		"description": "Property Types for object model properties. EDITS CAN BREAK MODELS. ADDS ARE SAFE! For other applications, put custom models into custom json file starting at ID 1000000",
+				"values": [
+					{ "key": "CONFIGURATION", "value": "1", "attributes": [{ "description": "Configuration data for Object. The CONFIGURATION type must always be present and set to 1."}] },
+					{ "key": "STATE", "value": "2", "attributes": [{ "description": "STATE data for Object"}] },
+					{ "key": "ACTION", "value": "3", "attributes": [{ "description": "Executes an ACTION on an Object"}] }
+				]
+       		},
+    		{	"id": "_UNIT_TYPES_",
+          		"description": "Unit Types for object model properties. EDITS CAN BREAK MODELS. ADDS ARE SAFE! For other applications, put custom models into custom json file starting at ID 1000000",
+				"values": [
+					{ "key": "healthscore", "value": "1", "attributes": [{ "description": "Healthscore for Object", "numeric":"True", "range":"0-10"}] },
+					{ "key": "percent", "value": "2", "attributes": [{ "description": "Value expressed in percentage", "symbol":"%"}] },
+					{ "key": "celcius", "value": "3", "attributes": [{ "description": "Temperature in degress Celcius", "numeric":"True", "range":"−273.15:x", "symbol":"°C"}] },
+					{ "key": "fahrenheit", "value": "4", "attributes": [{ "description": "Temperature in degress Fahrenheit", "numeric":"True", "range":"−459.67:x", "symbol":"°F"}] },
+					{ "key": "bytes", "value": "5", "attributes": [{ "description": "Value expressed in bytes", "symbol":"B"}] },
+					{ "key": "kilobytes", "value": "6", "attributes": [{ "description": "Value expressed in kilobytes", "symbol":"KB"}] },
+					{ "key": "megabytes", "value": "7", "attributes": [{ "description": "Value expressed in megabytes", "symbol":"MB"}] },
+					{ "key": "gigabytes", "value": "8", "attributes": [{ "description": "Value expressed in gigabytes", "symbol":"GB"}] },
+					{ "key": "terabytes", "value": "9", "attributes": [{ "description": "Value expressed in terabytes", "symbol":"TB"}] },
+					{ "key": "petabytes", "value": "10", "attributes": [{ "description": "Value expressed in petabytes", "symbol":"PB"}] },
+					{ "key": "currency", "value": "11", "attributes": [{ "description": "Value expressed in configured currency", "symbol":"{app.config['CURRENCY']}"}] }
+				]
+       		},
+    		{	"id": "_STATE_TYPES_",
+          		"description": "State Types for object model properties. EDITS CAN BREAK MODELS. ADDS ARE SAFE! For other applications, put custom models into custom json file starting at ID 1000000",
+				"values": [
+					{ "key": "UNKNOWN", "value": "0", "attributes": [{ "description": "Object State is 'UNKNOWN'"}] },
+					{ "key": "OFF", 	"value": "1", "attributes": [{ "description": "Object State is 'OFF'"}] },
+					{ "key": "ON", 		"value": "2", "attributes": [{ "description": "Object State is 'ON'"}] },
+					{ "key": "CYCLE", 	"value": "3", "attributes": [{ "description": "Object State is 'CYCLE'"}] }
+				]
+       		},
+    		{	"id": "_ENABLED_TYPES_",
+          		"description": "Enabled Types for objects.",
+				"values": [
+					{ "key": "ENABLED",  "value": "true", "attributes": [{ "description": "Object is Enabled"}] },
+					{ "key": "DISABLED", "value": "false", "attributes": [{ "description": "Object is Disabled"}] }
+				]
+       		},
+    		{	"id": "_DISABLED_TYPES_",
+          		"description": "Disabled Types for objects.",
+				"values": [
+					{ "key": "DISABLED", "value": "true", "attributes": [{ "description": "Object is Disabled"}] },
+					{ "key": "ENABLED",  "value": "false", "attributes": [{ "description": "Object is Enabled"}] }
+				]
+       		},
+    		{	"id": "_POWER_TYPES_",
+          		"description": "Power Types for objects. EDITS CAN BREAK MODELS. ADDS ARE SAFE! For other applications, put custom models into custom json file starting at ID 1000000",
+				"values": [
+					{ "key": "AC", "value": "0", "attributes": [{ "description": "Alternating Current"}] },
+					{ "key": "DC", "value": "1", "attributes": [{ "description": "Direct Current (Battery)"}] }
+				]
+       		},
+    		{	"id": "_RELATION_TYPES_",
+          		"description": "Relation Types for object model relations. 1-99 are locational. 100+ are situational. 1000+ are specifically descriptive. VALUE EDITS CAN BREAK MODELS AND THE CORE UI. ADDS ARE SAFE! For other applications, put custom models into custom json file starting at ID 1000000",
+				"values": [
+					{ "key": "CONTAINS", 	"value": "1", "attributes": [{ "description": ""}] },
+					{ "key": "PART_OF", 	"value": "2", "attributes": [{ "description": ""}] },
+					{ "key": "INSIDE_OF", 	"value": "3", "attributes": [{ "description": ""}] },
+					{ "key": "OUTSIDE_OF", 	"value": "4", "attributes": [{ "description": ""}] },
+					{ "key": "RIGHT_OF", 	"value": "5", "attributes": [{ "description": ""}] },
+					{ "key": "LEFT_OF", 	"value": "6", "attributes": [{ "description": ""}] },
+					{ "key": "NORTH_OF", 	"value": "7", "attributes": [{ "description": ""}] },
+					{ "key": "SOUTH_OF", 	"value": "8", "attributes": [{ "description": ""}] },
+					{ "key": "EAST_OF", 	"value": "9", "attributes": [{ "description": ""}] },
+					{ "key": "WEST_OF", 	"value": "10", "attributes": [{ "description": ""}] },
+					{ "key": "ABOVE", 		"value": "11", "attributes": [{ "description": ""}] },
+					{ "key": "BELOW", 		"value": "12", "attributes": [{ "description": ""}] },
+					{ "key": "NEIGHBOR_OF", "value": "13", "attributes": [{ "description": ""}] },
+					{ "key": "MEMBER_OF", 	"value": "14", "attributes": [{ "description": ""}] },
+					{ "key": "FAR_FROM", 	"value": "15", "attributes": [{ "description": ""}] },
+					{ "key": "NEAR_TO", 	"value": "16", "attributes": [{ "description": ""}] },
+					{ "key": "CHILD_OF", 	"value": "100", "attributes": [{ "description": ""}] },
+					{ "key": "PARENT_OF", 	"value": "101", "attributes": [{ "description": ""}] },
+					{ "key": "SIBLING_OF", 	"value": "102", "attributes": [{ "description": ""}] },
+					{ "key": "RELATED_TO", 	"value": "103", "attributes": [{ "description": ""}] },
+					{ "key": "DEPENDS_ON", 	"value": "104", "attributes": [{ "description": ""}] },
+					{ "key": "PLUGGED_INTO_OUTLET", "value": "1000", "attributes": [{ "description": "plugged into power outlet", "required_property_from": "connected_outlet", "required_property_to": "outlets", "dependency": "true"}] },
+					{ "key": "PLUGGED_INTO_PORT", "value": "1001", "attributes": [{ "description": "plugged into network port", "required_property_from": "connected_port", "required_property_to": "ports"}] },
+					{ "key": "REMOTE_SENSOR", "value": "1002", "attributes": [{ "description": "related object is acting as a remote sensor"}] }
+				]
+       		},
+    		{	"id": "_OBJECT_ROLE_TYPES_",
+          		"description": "Definitions of object roles. Objects can have multiple roles. EDITS CAN BREAK MODELS. ADDS ARE SAFE! For other applications, put custom models into custom json file starting at ID 1000000",
+				"values": [
+					{ "key": "MANAGE", "value": "0", "attributes": [{ "description": "Manage Other Objects"}] },
+					{ "key": "POWER", "value": "1", "attributes": [{ "description": "Supply Power"}] },
+					{ "key": "HEATING", "value": "2", "attributes": [{ "description": "Increase Temperature"}] },
+					{ "key": "COOLING", "value": "3", "attributes": [{ "description": "Decrease Temperature"}] }
+				]
+       		}
+		]
+	},
+	"ui_models": {
+		"ui_model": [
+			{
+				"id": "generic_button",
+				"type": "button",
+				"title": ""
+			},
+			{
+				"id": "confirm_button_danger",
+				"type": "button",
+				"title": "",
+				"style": "outline-danger"
+			},
+			{
+				"id": "confirm_button_info",
+				"type": "button",
+				"title": "",
+				"style": "info"
+			},
+			{
+				"id": "power_toggle_button",
+				"type": "toggle_button",
+				"title": "Power",
+				"action-on": "power_on",
+				"action-off": "power_off",
+				"data-on": "ON",
+				"data-off": "OFF",
+				"data-onstyle": "success",
+				"data-offstyle": "danger",
+				"alter-disabled-style": true
+			},
+			{
+				"id": "power_outlet_toggle_button",
+				"type": "toggle_button",
+				"title": "Power Outlet {outlet}",
+				"action-on": "power_on_outlets({outlet})",
+				"action-off": "power_off_outlets({outlet})",
+				"data-on": "ON",
+				"data-off": "OFF",
+				"data-onstyle": "success",
+				"data-offstyle": "danger",
+				"alter-disabled-style": true
+			},
+			{
+				"//": "This button toggles a state boolean",
+				"id": "enabled_toggle_button",
+				"type": "toggle_button",
+				"title": "",
+				"action-on": "enabled(true)",
+				"action-off": "enabled(false)",
+				"data-on": "ENABLED",
+				"data-on-caption": "ENABLE",
+				"data-on-caption-pressed": "ENABLED",
+				"data-off": "DISABLED",
+				"data-off-caption": "DISABLE",
+				"data-off-caption-pressed": "DISABLED",
+				"data-onstyle": "success",
+				"data-offstyle": "outline-warning",
+				"alter-disabled-style": true
+			},
+			{
+				"//": "This button toggles a reverse state boolean (i.e. something_disabled) and uses _DISABLED_TYPES_",
+				"id": "reverse_enabled_toggle_button",
+				"type": "toggle_button",
+				"title": "",
+				"action-on": "enabled(false)",
+				"action-off": "enabled(true)",
+				"data-on": "DISABLED",
+				"data-off": "ENABLED",
+				"data-onstyle": "secondary",
+				"data-offstyle": "primary",
+				"alter-disabled-style": false
+			}
+		]
+	},
+	"object_models": {
+		"object_model": [
+			{
+				"id": "ROOT_OBJECT",
+				"description": "All Objects inherit from this object",
+				"model_classtype": "OBJECT",
+				"model_classname": "phenome_core.core.base.base_object.BaseObject",
+				"phenome": {
+					"property_model": [
+						{ "name": "name", "description": "Name for the object (defaults to unique_id)", "property_type": "CONFIGURATION", "value_type": "TEXT", "default": "{object.unique_id}", "attributes": [{ "show_in_ui": "true", "required": 0}]},
+						{ "name": "icon", "description": "Icon representing the object", "property_type": "CONFIGURATION", "value_type": "TEXT", "default": "" },
+						{ "name": "health", "description": "Health of the object (0=healthy, 10=sick)", "property_type": "CONFIGURATION", "value_type": "INTEGER", "default": "0" },
+						{ "name": "last_unreachable_time", "description": "Last time the object was down (time/milliseconds)", "property_type": "STATE", "value_type": "INTEGER", "default": "0", "model_only": "0" },
+						{ "name": "last_notify_time", "description": "Last time the system sent notification (time/milliseconds)", "property_type": "STATE", "value_type": "INTEGER", "default": "0", "model_only": "0" }
+					],
+					"action_model": [
+						{ "name": "enabled", 	"description": "Administrative Status", "value_type": "TEXT", "default": "", "attributes": [{ "classname": "self", "methodname":"set_enabled", "show_in_ui": "true", "create_method": "True", "alter_state":"admin_disabled", "state_enum":"_DISABLED_TYPES_", "ui_model":"enabled_toggle_button", "admin_only":"true", "ui_group":"admin"}]},
+						{ "name": "delete", 	"description": "Delete Object", "value_type": "TEXT", "default": "", "attributes": [{ "classname": "self", "methodname":"delete", "show_in_ui": "true", "create_method": "True", "ui_button_title":"DELETE", "ui_model":"confirm_button_danger", "ui_confirmation":"Are you really sure you want to delete this object?<br><strong>THIS ACTION CANNOT BE UNDONE</strong>", "admin_only":"true", "ui_group":"admin"}]}
+					]
+				}
+			},
+			{
+				"id": "ROOT_POWERED_OBJECT",
+				"description": "All Powered Objects inherit from this object",
+				"model_classtype": "OBJECT",
+				"model_classname": "phenome.extensions.classtypes.OBJECT.powered_object.PoweredObject",
+				"phenome": {
+					"property_model": [
+						{ "name": "last_powercycle_time", "description": "Last time the object was powercycled (time/milliseconds)", "property_type": "STATE", "value_type": "INTEGER", "default": "0", "model_only": "0" },
+						{ "name": "power_state", "description": "Powered state of the object", "property_type": "STATE", "value_type": "INTEGER", "default": 1, "attributes": [{ "show_in_ui": "false", "required": 0, "value_enum":"_STATE_TYPES_", "valid_values":"OFF,ON"}]},
+						{ "name": "power_type", "description": "Type of power supplied to object", "property_type": "CONFIGURATION", "value_type": "INTEGER", "default": "AC", "attributes": [{ "show_in_ui": "true", "required": 0, "value_enum":"_POWER_TYPES_", "ui_group":"power"}]},
+						{ "name": "power_usage_watts", "description": "The amount of power in watts used by this device", "property_type": "CONFIGURATION", "value_type": "INTEGER", "default": "0", "attributes": [{ "show_in_ui": "true", "required": 0, "ui_group":"power"}]},
+						{ "name": "powercycle_count", "description": "The current count of powercycle attemps for this 'period' (count)", "property_type": "STATE", "value_type": "INTEGER", "default": "0", "model_only": "0" },
+						{ "name": "powercycle_delay", "description": "The amount of time to wait during powercycle of an outlet (seconds)", "property_type": "CONFIGURATION", "value_type": "INTEGER", "default": "2", "attributes": [{ "show_in_ui": "true", "required": 0, "ui_group":"power"}]},
+						{ "name": "powercycle_max_attempts", "description": "The maximum number of times to attempt a powercycle within powercycle_max_wait_time (count)", "property_type": "CONFIGURATION", "value_type": "INTEGER", "default": "3", "attributes": [{ "show_in_ui": "true", "required": 0, "ui_group":"power"}]},
+						{ "name": "powercycle_max_wait_time", "description": "The amount of time to wait between the time powercycle_max_attempts is reached and next powercycle attempt (seconds)", "property_type": "CONFIGURATION", "value_type": "INTEGER", "default": "900", "attributes": [{ "show_in_ui": "true", "required": 0, "ui_group":"power"}]},
+						{ "name": "connected_outlet", "description": "The outlet that this object is plugged into", "property_type": "CONFIGURATION", "value_type": "TEXT", "default": "", "attributes": [{ "show_in_ui": "true", "required": 0, "ui_group":"power"}]}
+					],
+					"action_model": [
+						{ "name": "power_on", 			"description": "Power ON", 				 "value_type": "TEXT", "default": "", "attributes": [{ "classname": "self", "methodname":"power_on", "show_in_ui": "true", "create_method": "True", "required_property":"connected_outlet", "alter_state":"power_state", "target_state":"ON", "state_enum":"_STATE_TYPES_", "force_state":"False", "ui_model":"power_toggle_button", "ui_group":"power"}]},
+						{ "name": "power_off", 			"description": "Power OFF", 			 "value_type": "TEXT", "default": "", "attributes": [{ "classname": "self", "methodname":"power_off", "show_in_ui": "true", "create_method": "True", "required_property":"connected_outlet", "alter_state":"power_state", "target_state":"OFF", "state_enum":"_STATE_TYPES_", "force_state":"False", "ui_model":"power_toggle_button", "ui_group":"power"}]},
+						{ "name": "powercycle", 		"description": "Power CYCLE", 			 "value_type": "TEXT", "default": "", "attributes": [{ "classname": "self", "methodname":"powercycle", "show_in_ui": "true", "delay_secs": "30", "create_method": "True", "required_property":"connected_outlet", "alter_state":"power_state", "target_state":"ON", "state_enum":"_STATE_TYPES_", "ui_model":"generic_button", "ui_group":"power"}]}
+					]
+				}
+			},
+			{
+				"id": "ROOT_SYSTEM",
+				"description": "All Systems",
+				"model_classtype": "GENERIC_SYSTEM",
+				"model_classname": "phenome_core.core.base.base_object.BaseObject",
+				"model_poller_name": "GENERIC_SYSTEM_POLLER",
+				"phenome": {
+					"property_model": [
+						{ "name": "username", "description": "Username to authenticate", "property_type": "CONFIGURATION", "value_type": "TEXT", "default": "username", "attributes": [{ "show_in_ui": "true", "required": 1, "add_only":"false"}]},
+						{ "name": "password", "description": "Password to authenticate",  "property_type": "CONFIGURATION", "value_type": "TEXT", "default": "password", "attributes": [{ "show_in_ui": "true", "required": 1, "encrypt": 1, "add_only":"false"}]},
+						{ "name": "utilization_threshold", "description": "Utilization which triggers a negative addition to health score (percentage)",  "property_type": "CONFIGURATION", "value_type": "INTEGER", "default": "75" },
+						{ "name": "check_utilization", "description": "Checks overall utilization", "property_type": "ACTION", "value_type": "TEXT", "default": "", "attributes": [{ "action": "check_utilization" }]}
+					],
+					"data_model": [
+						{ "name": "health", "description": "health of system", "value_type": "TEXT", "default": "", "attributes": [{ "value_type": "INTEGER", "units": "healthscore", "aggr": "mean"}]},
+						{ "name": "memory_total", "description": "total memory", "value_type": "TEXT", "default": "", "attributes": [{ "value_type": "INTEGER", "units": "bytes", "aggr": "mean"}]},
+						{ "name": "memory_util", "description": "memory utilization", "value_type": "TEXT", "default": "", "attributes": [{ "value_type": "INTEGER", "units": "percent", "aggr": "mean"}]},
+						{ "name": "network_util", "description": "network utilization", "value_type": "TEXT", "default": "", "attributes": [{ "value_type": "INTEGER", "units": "percent", "aggr": "mean"}]},
+						{ "name": "cpu_util", "description": "cpu utilization", "value_type": "TEXT", "default": "", "attributes": [{ "value_type": "INTEGER", "units": "percent", "aggr": "mean"}]},
+						{ "name": "disk_util", "description": "disk utilization", "value_type": "TEXT", "default": "", "attributes": [{ "value_type": "INTEGER", "units": "percent", "aggr": "mean"}]}
+					]
+				}
+			},
+			{
+				"id": "ROOT_DEVICE",
+				"description": "All Devices that do not fit in their own specific classtype categories.",
+				"model_classtype": "GENERIC_DEVICE",
+				"model_classname": "phenome_core.core.base.base_object.BaseObject",
+				"phenome": {
+					"property_model": [
+					],
+					"data_model": [
+						{ "name": "health", "description": "health of device", "value_type": "TEXT", "default": "", "attributes": [{ "value_type": "INTEGER", "units": "healthscore", "aggr": "mean"}]}
+					]
+				}
+			},
+			{
+				"id": "ROOT_SENSOR",
+				"description": "All Sensors",
+				"model_classtype": "ENVIRONMENT_SENSOR",
+				"model_classname": "phenome.extensions.classtypes.ENVIRONMENT_SENSOR.base_sensor.BaseSensor",
+				"model_poller_name": "ENVIRONMENT_SENSOR_POLLER",
+				"model_classname_results": "phenome.extensions.classtypes.ENVIRONMENT_SENSOR.sensor_results.SensorBaseResults",
+				"phenome": {
+					"property_model": [
+						{ "name": "temp_warning", "description": "Warning level for Temperature of Sensor (degrees)", "value_type": "INTEGER", "default": "80", "attributes": [{ "show_in_ui": "true", "required": 0}]},
+						{ "name": "temp_error", "description": "Error level for Temperature of Sensor (degrees)", "value_type": "INTEGER", "default": "90", "attributes": [{ "show_in_ui": "true", "required": 0}]},
+						{ "name": "check_temps", "description": "Checks temperatures", "property_type": "ACTION", "value_type": "TEXT", "default": "", "attributes": [{ "action": "check_temps" }]}
+					],
+					"data_model": [
+					{ "name": "health", "description": "healthscore", "value_type": "TEXT", "default": "", "attributes": [{ "value_type": "int64", "units": "healthscore", "aggr": "mean"}]},
+					{ "name": "temperature", "description": "temperature", "value_type": "TEXT", "default": "", "attributes": [{ "value_type": "float64", "units": "celcius", "aggr": "mean"}]}
+					],
+					"action_model": [
+						{ "name": "check_temps", 		"description": "Checks temperatures", 	 "value_type": "TEXT", "default": "", "attributes": [
+							{ 	"classname": "phenome.extensions.sensorchecks.generic_sensorcheck.GenericCheck",
+								"methodname":"execute",
+								"input":"temperature",
+								"use_avg":"true",
+								"error_state_key": "temp_error",
+								"error_level": "object.temp_error",
+								"warning_level": "object.temp_warning",
+								"error_healthscore": "5",
+								"warning_healthscore": "3",
+								"has_error":"error_level is not None and error_level > 0 and _result_avg > error_level",
+								"has_warning":"warning_level is not None and warning_level > 0 and _result_avg > warning_level",
+								"error_timestamp":"last_temp_error_time",
+								"error_message":"'High temperatures ({}>{})'.format(_result_avg, object.temp_error)",
+								"warning_message":"'Elevated temperatures ({}>{})'.format(_result_avg, object.temp_warning)",
+								"behavior_on_error":"_notify",
+								"behavior_on_warning":"_notify"
+							}]
+						}
+					]
+				}
+			},
+			{
+				"id": "ROOT_PDU",
+				"description": "All PDUs",
+				"model_classtype": "POWER_DISTRIBUTION_UNIT",
+				"model_classname": "phenome.extensions.classtypes.POWER_DISTRIBUTION_UNIT.base_pdu.BasePDU",
+				"model_poller_name": "PDU_POLLER",
+				"model_classname_processor": "phenome_core.core.base.base_processor.BaseProcessor",
+				"phenome": {
+					"property_model": [
+						{ "name": "outlets", "description": "The outlets of the PDU providing power (e.g. '1,2,3,4')", "value_type": "TEXT", "default": "", "attributes": [{ "show_in_ui": "true"}]},
+						{ "name": "_primary_role", "description": "Primary role of object", "value_type": "TEXT", "default": "POWER", "attributes": [{ "show_in_ui": "false", "required": 0, "value_enum":"_OBJECT_ROLE_TYPES_"}]}
+					],
+					"action_model": [
+						{ "name": "power_on_outlets",	"description": "Power ON outlet(s)", "value_type": "TEXT", "default": "", "attributes": [{ "classname": "self", "methodname":"power_on_outlets", "show_in_ui": "true", "method_arguments":"outlets", "required_property":"outlets", "alter_state":"get_outlets", "target_state":"ON", "state_enum":"_STATE_TYPES_", "force_state":"False", "delay_secs": "1", "create_method": "True", "ui_model":"power_outlet_toggle_button", "ui_group":"power"}]},
+						{ "name": "power_off_outlets",	"description": "Power OFF outlet(s)",   "value_type": "TEXT", "default": "", "attributes": [{ "classname": "self", "methodname":"power_off_outlets", "show_in_ui": "true", "method_arguments":"outlets", "required_property":"outlets", "alter_state":"get_outlets", "target_state":"OFF", "state_enum":"_STATE_TYPES_", "force_state":"False", "delay_secs": "1", "create_method": "True", "ui_model":"power_outlet_toggle_button", "ui_group":"power"}]},
+						{ "name": "powercycle_outlets",	"description": "Power CYCLE all outlets",   "value_type": "TEXT", "default": "", "attributes": [{ "classname": "self", "methodname":"powercycle_outlets", "show_in_ui": "true", "required_property":"outlets", "create_method": "True", "ui_model":"generic_button", "ui_group":"power"}]}
+					]
+				}
+			},
+			{
+				"id": "HOLITICS_CORE_AGENT",
+				"description": "Holitics Core Agent",
+				"model_classtype": "GENERIC_SYSTEM",
+				"model_subclasstype": "CORE_AGENT",
+				"model_classname": "phenome.extensions.classtypes.HOLITICS_AGENT.core_agent.CoreAgent",
+				"phenome": {
+					"property_model": [
+						{ "name": "hardware_version", "description": "The version of hardware this agent is running", "property_type": "CONFIGURATION", "value_type": "INTEGER", "default": "AC", "attributes": [{ "show_in_ui": "true", "required": 0, "value_enum":"_POWER_TYPES_"}]},
+						{ "name": "software_version", "description": "The version of software this agent is running", "property_type": "CONFIGURATION", "value_type": "TEXT", "default": "" }
+					],
+					"action_model": [
+						{ "name": "get_system_info",	"description": "Lists System Information", "value_type": "TEXT", "default": "", "attributes": [{ "classname": "self", "methodname":"get_system_info", "show_in_ui": "true", "delay_secs": "1", "create_method": "True"}]},
+						{ "name": "discover",			"description": "Discovers local agents",   "value_type": "TEXT", "default": "", "attributes": [{ "classname": "self", "methodname":"discover", "show_in_ui": "true", "delay_secs": "30", "create_method": "True"}]},
+						{ "name": "update",				"description": "Perform software update",  "value_type": "TEXT", "default": "", "attributes": [{ "classname": "self", "methodname":"update", "show_in_ui": "true", "create_method": "True"}]}
+					]
+				}
+			}
+		]
+	}
+}

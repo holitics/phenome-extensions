@@ -1,0 +1,39 @@
+	<form id="form_add_relation" class="needs-validation" method="GET" action="/api/v1/add_relation_request" novalidate>
+		<input type='hidden' name='_object_id' id='form_object_id' value='{{object_id}}'>
+		<div class="form-row">
+			<label for="form_relation_type" class="col-sm-4 col-form-label">FROM this ...</label>
+			<div class="col-sm-8">
+				<input type="text" readonly class="form-control-plaintext" id="form_object_full_name" value="{{object_model}}: {{object_name}}">
+			</div>
+		</div>
+		<div class="form-row">
+			<label for="form_relation_type" class="col-sm-4 col-form-label">FILTER by ...</label>
+			<div class="col-sm-8">
+				<select class="form-control" name="_classtype_id" id="form_subclasstype_filter" onchange='_classtype_changed(this);'>
+					<option value="">Object Type</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-row">
+			<label for="form_relation_type" class="col-sm-4 col-form-label">TO this ...</label>
+			<div class="col-sm-8">
+				<select class="form-control" name="_relation_id" id="form_relation_id" onchange='_related_object_changed(this);'>
+				  <option value="">Object To Relate</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-row">
+			<label for="form_relation_type" class="col-sm-4 col-form-label">WITH this ...</label>
+    		<div class="col-sm-8">
+				<select class="form-control" name='_relation_type' id='form_relation_type' onchange='_relation_type_changed(this);'>
+					<option value="">Type of Relationship</option>
+				</select>
+			</div>
+		</div>		
+		<div class="form-row" style="padding:10px;">
+			<input type="text" class="form-control"  name="_details" id="form_details" placeholder="relationship details (optional)">
+		</div>
+		
+		<button class="btn btn-primary btn-sm" id="form_add_relation_submit_button" type="submit" style="display:none;"></button>	  
+		
+	</form>

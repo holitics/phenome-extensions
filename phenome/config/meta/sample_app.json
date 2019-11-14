@@ -1,0 +1,42 @@
+{
+	"file_description": "This is the Sample Application configuration file",
+  	"phenome_app_id": 1,
+	"phenome_app_name": "sample_app",
+    "phenome_app_title": "SampleApp",
+    "phenome_app_version": "0.1.0",
+    "phenome_app_description": "Sample Application on the Phenome Platform",
+	"phenome_app_classname": "phenome.sample_app.sample_app",
+	"phenome_developer_id": 0,
+  	"enums": {
+    	"enum": [
+    		{	"id": "_MODEL_CLASSTYPES_",
+          		"description": "Classtypes for new objects. IMPORTANT!! EDITS CAN BREAK MODELS. ADDS ARE SAFE! For other applications, put custom models into custom json file starting at ID 1000000",
+				"values": [
+					{ "key": "SAMPLE_OBJECT_CLASS", "value": "1000001", "attributes": [{ "description": "Sample Object Class", "icon": "phenome_icon.png"}] }
+				]
+       		},
+    		{	"id": "_MODEL_SUBCLASSTYPES_",
+          		"description": "SubClassTypes for all Object Models. IMPORTANT!! EDITS CAN BREAK MODELS. ADDS ARE SAFE! For other applications, put custom models into custom json file starting at ID 1000000",
+				"values": [
+					{ "key": "SAMPLE_OBJECT_SUBCLASS", "value": "1000001", "attributes": [{ "description": "Sample Object", "icon": "phenome_icon.png"}] }
+				]
+       		}
+    	]
+	},
+	"object_models": {
+    	"object_model": [
+	  	{
+			"id": "ROOT_SAMPLE_OBJECT",
+			"description": "All Sample Objects",
+			"model_classtype": "SAMPLE_OBJECT_CLASS",
+			"model_subclasstype": "SAMPLE_OBJECT_SUBCLASS",
+			"model_classname": "phenome_core.core.base.base_object.BaseObject",
+			"phenome": {
+				"property_model": [
+					{ "name": "configuration", "description": "Configuration parameters for the Sample Object", "property_type": "CONFIGURATION", "value_type": "TEXT", "default": "", "attributes": [{}]}
+				]
+			}
+	  	}
+		]
+  	}
+}
