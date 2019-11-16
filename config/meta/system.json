@@ -1,10 +1,10 @@
 {
-	"file_description": "Core system configuration",
+	"file_description": "Phenome system configuration",
   	"phenome_app_id": 0,
-	"phenome_app_name": "core",
+	"phenome_app_name": "phenome",
     "phenome_app_title": "holitics_core_agent",
     "phenome_app_version": "0.0.1",
-    "phenome_app_description": "Open Source Platform Agent for core holitics applications",
+    "phenome_app_description": "Open Source Platform Agent for Phenome applications",
 	"phenome_app_classname": "phenome_core.core.api",
 	"phenome_developer_id": 0,
   	"enums": {
@@ -341,7 +341,7 @@
 			},
 			{
 				"id": "HOLITICS_CORE_AGENT",
-				"description": "Holitics Core Agent",
+				"description": "Phenome Core Agent",
 				"model_classtype": "GENERIC_SYSTEM",
 				"model_subclasstype": "CORE_AGENT",
 				"model_classname": "phenome.extensions.classtypes.HOLITICS_AGENT.core_agent.CoreAgent",
