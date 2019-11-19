@@ -1,4 +1,4 @@
 
 # PACKAGES REQUIRED
 
-phenome-core>=0.1.380
+phenome-core>=0.1.394
