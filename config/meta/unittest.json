@@ -19,7 +19,7 @@
         "id": "TEST_SENSOR",
         "description": "Test Sensor for Unit Tests",
         "model_classtype": "ENVIRONMENT_SENSOR",
-        "model_classname": "test.supporting.test_sensor.TestSensor",
+        "model_classname": "phenome.test.supporting.test_sensor.TestSensor",
         "model_subclasstype": "TEST_SENSOR_SUBTYPE",
         "phenome": {
           "property_model": [
@@ -55,7 +55,7 @@
         "id": "TEST_SENSOR_CASCADE",
         "description": "Test Sensor for Unit Tests",
         "model_classtype": "ENVIRONMENT_SENSOR",
-        "model_classname": "test.supporting.test_sensor.TestSensor",
+        "model_classname": "phenome.test.supporting.test_sensor.TestSensor",
         "model_subclasstype": "TEST_SENSOR_SUBTYPE",
         "phenome": {
           "property_model": [
@@ -87,7 +87,7 @@
         "id": "TEST_PDU_WRONG_CLASSNAME",
         "description": "Test PDU for Unit Tests",
         "model_classtype": "POWER_DISTRIBUTION_UNIT",
-        "model_classname": "test.supporting.test_sensor.TestSensor",
+        "model_classname": "phenome.test.supporting.test_sensor.TestSensor",
         "model_subclasstype": "TEST_PDU_SUBTYPE",
         "phenome": {
           "property_model": [
@@ -118,7 +118,7 @@
         "id": "TEST_PDU_CASCADE",
         "description": "Test PDU for Unit Tests",
         "model_classtype": "POWER_DISTRIBUTION_UNIT",
-        "model_classname": "test.supporting.test_pdu.TestPDU",
+        "model_classname": "phenome.test.supporting.test_pdu.TestPDU",
         "model_subclasstype": "TEST_PDU_SUBTYPE",
         "phenome": {
           "property_model": [
@@ -150,7 +150,7 @@
         "id": "TEST_SENSOR_CIRCULAR_DEPENDENCY",
         "description": "Test Sensor for Unit Tests",
         "model_classtype": "ENVIRONMENT_SENSOR",
-        "model_classname": "test.supporting.test_sensor.TestSensor",
+        "model_classname": "phenome.test.supporting.test_sensor.TestSensor",
         "model_subclasstype": "TEST_SENSOR_SUBTYPE",
         "phenome": {
           "property_model": [
