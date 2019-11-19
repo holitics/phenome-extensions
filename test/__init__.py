@@ -106,11 +106,19 @@ class BaseTest(unittest.TestCase):
 
         import sys, configparser
 
+        ## Expected Directory Structure
+
+        # /app_dir/app_name/        - App Specific Files
+        # /app_dir/test/            - App specific (or Phenome Core) Test Files
+        # /app_dir/phenome/test/    - Phenome Extensions Test Framework (and location of this file)
+        # /app_dir/phenome_core/    - Phenome Core
+
         rootdir = os.path.dirname(os.path.realpath(__file__))
 
         if rootdir.endswith('/phenome/test'):
-            # the phenome test framework in inside the phenome dir which is inside a parent directory
+            # if there is a "app specific" test directory...
             rootdir = rootdir[:-13]
+
         elif rootdir.endswith('/test'):
             # unit tests from a top-level tests directory..
             rootdir = rootdir[:-5]
