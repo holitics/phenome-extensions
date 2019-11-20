@@ -19,9 +19,21 @@ Currently, it is organized into several different areas:
 
 ## Getting started
 
-Once you create a new project, you can clone this repo directly into a subdirectory named "phenome".
+Once you create a new project, clone this repo directly into a subdirectory named "phenome":
 
 ```
 $ git clone https://github.com/holitics/phenome-extensions phenome
 ```
+
+And if you haven't done so already - the **Phenome Core** will be needed:
+```
+$ pip install phenome-core --extra-index-url https://api.packagr.app/AvVcpYfO2/
+```
+
+At this point the Unit Tests should be runnable. Let's try it out!
+
+```
+$ pytest
+```
+
 
