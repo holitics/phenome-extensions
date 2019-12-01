@@ -17,7 +17,7 @@ class MinerDumper():
 
     def __do_miner_api_call(self, cgminer_obj, command_name, args):
 
-        print("\n---------- {} \n".format(command_name.upper()))
+        print("\n'{\"command\": \"" + command_name + "\"}':")
         output = cgminer_obj.call(command_name, args)
         print(output)
 
