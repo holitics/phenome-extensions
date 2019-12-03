@@ -19,10 +19,17 @@ class CgminerAPI(object):
 
     """ Cgminer RPC API wrapper. """
 
+    DEFAULT_PORT = 4028
+
     def __init__(self, host='localhost', port=4028, payload_command='command', parameter_argument='parameter', encapsulate_args=False):
 
         self.data = {}
         self.host = host
+
+        # just in case the configuration is empty and sends None, use the default port
+        if port is None:
+            port = CgminerAPI.DEFAULT_PORT
+
         self.port = port
         self.payload_command = payload_command
         self.parameter_argument = parameter_argument
