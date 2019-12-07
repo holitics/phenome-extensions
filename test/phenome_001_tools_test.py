@@ -8,6 +8,8 @@ from phenome_core.core.database.model.api import get_objects_by_model_id
 
 builder = None
 
+CONST_API_PORT = 7000
+
 
 class TestPhenomeBuilder(BaseTest):
 
@@ -159,13 +161,18 @@ class TestSimulator(BaseTest):
 
     def setUp(self):
 
-        self.CONST_SIMULATOR_API_TARGET_PORT += 1
+        global CONST_API_PORT
+        # increment the port
+        CONST_API_PORT = CONST_API_PORT + 1
+
+        # set the port
+        self.api_port = CONST_API_PORT
 
         super(TestSimulator, self).setUp()
 
     def test_simulator_001_HTTP(self):
 
-        api_port = str(self.CONST_SIMULATOR_API_TARGET_PORT)
+        api_port = str(self.api_port)
 
         # get path to data file
         simulator_data_path = self.absolute_path_of_test_directory + "/supporting/resources/simulator_route_test.py"
@@ -204,16 +211,14 @@ class TestSimulator(BaseTest):
 
     def test_simulator_002_UDP(self):
 
-        api_port = self.CONST_SIMULATOR_API_TARGET_PORT
-
         response = None
 
         MESSAGE = "Hello World"
         message_bytes = str.encode(MESSAGE)
-        server_address_and_port = ("127.0.0.1", api_port)
+        server_address_and_port = ("127.0.0.1", self.api_port)
 
         # start the simulator
-        simulator = self.startSimulator(None, "UDP_SERVER", api_port)
+        simulator = self.startSimulator(None, "UDP_SERVER", self.api_port)
 
         try:
 

@@ -5,10 +5,19 @@ from phenome.test import BaseTest
 from phenome.extensions.exporters.statsd import StatsD
 from phenome.test.supporting.test_results import BaseResultsTest
 
+CONST_API_PORT = 7100
 
 class TestExporters(BaseTest):
 
     def setUp(self):
+
+        global CONST_API_PORT
+        # increment the port
+        CONST_API_PORT = CONST_API_PORT + 1
+
+        # set the port
+        self.api_port = CONST_API_PORT
+
         super(TestExporters, self).setUp()
 
     def __get_object(self, id):
@@ -43,16 +52,13 @@ class TestExporters(BaseTest):
 
         MESSAGE = 'phenome.TEST_RESULTS.ROOT_OBJECT.127-0-0-1.temperature:50|g'
 
-        self.CONST_SIMULATOR_API_TARGET_PORT += 1
-        api_port = self.CONST_SIMULATOR_API_TARGET_PORT
-
         config = {
             "id": "STATSD_Exporter",
             "metric_prefix": "phenome",
             "metric_pattern": "<MODEL_CLASSTYPE>.<OBJECT_MODEL>.<OBJECT_IP>.<METRIC_ID>",
             "enabled": "True",
             "host": "localhost",
-            "port": api_port
+            "port": self.api_port
         }
 
         # create a StatsD Exporter and test the metric collection
@@ -64,7 +70,7 @@ class TestExporters(BaseTest):
         results.set_result(self.__get_object(1),'temperature',50)
 
         # NEXT - We setup a STATSD Simulator
-        simulator = self.startSimulator(None, "UDP_SERVER", api_port)
+        simulator = self.startSimulator(None, "UDP_SERVER", self.api_port)
         time.sleep(1)
 
         try:

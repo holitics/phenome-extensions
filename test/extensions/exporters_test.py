@@ -3,14 +3,20 @@
 import sys, time
 from phenome.test import BaseTest
 
-CONST_API_PORT = 10000
+CONST_API_PORT = 8000
 
 
 class TestExporters(BaseTest):
 
     def setUp(self):
 
-        self.CONST_SIMULATOR_API_TARGET_PORT += 1
+        global CONST_API_PORT
+        # increment the port
+        CONST_API_PORT = CONST_API_PORT + 1
+
+        # set the port
+        self.api_port = CONST_API_PORT
+
         super(TestExporters, self).setUp()
 
     def _check_simulator_message(self, simulator, message):
@@ -34,20 +40,18 @@ class TestExporters(BaseTest):
 
         # This unit test is testing the statsd client and UDP simuserver more than anything else
 
-        api_port = self.CONST_SIMULATOR_API_TARGET_PORT
-
         response = None
         MSG_HELLO = "Hello World"
         MSG_STATSD_1 = 'phenome.Hello World:1|c'
         MSG_STATSD_2 = 'phenome.Metric2:100|g'
 
         # start the simulator
-        simulator = self.startSimulator(None, "UDP_SERVER", api_port)
+        simulator = self.startSimulator(None, "UDP_SERVER", self.api_port)
 
         try:
 
             import statsd
-            c = statsd.StatsClient('localhost', api_port, prefix='phenome')
+            c = statsd.StatsClient('localhost', self.api_port, prefix='phenome')
 
             # Now send the messages
 

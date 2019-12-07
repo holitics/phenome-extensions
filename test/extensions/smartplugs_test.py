@@ -2,7 +2,7 @@
 import sys
 from phenome.test import BaseTest
 
-CONST_API_PORT = 9000
+CONST_API_PORT = 8100
 
 
 class TestSMARTPlugs(BaseTest):
@@ -19,7 +19,7 @@ class TestSMARTPlugs(BaseTest):
         super(TestSMARTPlugs, self).setUp()
 
         # start with the base port, we will need to increment for each test as the sockets take a while to clear up
-        sys._unit_tests_API_TARGET_PORT = self.CONST_SIMULATOR_API_TARGET_PORT
+        sys._unit_tests_API_TARGET_PORT = self.api_port #self.CONST_SIMULATOR_API_TARGET_PORT
 
     def TPLINK_000_LIVE(self):
 
