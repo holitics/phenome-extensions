@@ -19,17 +19,29 @@ class StatsD(BaseExporter):
         # get the results as a list of EDRs
         edrs = self.build_metric_collection(pattern, collector)
 
-        if edrs is not None and len(edrs)>0:
+        exported = []
 
-            # create a statsd client
-            c = statsd.StatsClient(host, port, prefix=prefix)
+        try:
+            if edrs is not None and len(edrs)>0:
 
-            # send to statsD
-            for edr in edrs:
-                try:
-                    result = edr.value
-                    if isinstance(result, str):
-                        result = float(result)
-                    c.gauge(edr.key, result)
-                except Exception as ex:
-                    print(ex)
+                # create a statsd client
+                c = statsd.StatsClient(host, port, prefix=prefix)
+
+                # send to statsD
+                for edr in edrs:
+                    try:
+                        result = edr.value
+                        if isinstance(result, str):
+                            result = float(result)
+                        c.gauge(edr.key, result)
+
+                        # add to the exported list
+                        exported.append(edr)
+
+                    except Exception as ex:
+                        print(ex)
+
+        except Exception as ex:
+            pass
+
+        self.exported_records = exported

@@ -4,13 +4,13 @@
     "exporters": {
         "exporter": [
             {
-                "id": "STATSD_Poller",
+                "id": "STATSD_Exporter",
                 "requires": "statsd",
                 "requires_version": ">=3.3.0",
                 "classname": "phenome.extensions.exporters.statsd.StatsD",
-                "description": "STATSD exporter for poller metrics",
+                "description": "STATSD exporter for collected agent metrics",
                 "metric_prefix": "phenome",
-                "metric_pattern": "<MODEL_CLASSTYPE>.<OBJECT_MODEL>.<OBJECT_NAME>.<METRIC_ID>",
+                "metric_pattern": "<MODEL_CLASSTYPE>.<OBJECT_MODEL>.<OBJECT_IP>.<METRIC_ID>",
                 "enabled": "True",
                 "host": "localhost",
                 "port": 8125
