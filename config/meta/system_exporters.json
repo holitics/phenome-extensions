@@ -1,0 +1,20 @@
+{
+    "file_description": "This is the base exporters configuration file",
+    "phenome_app_id": 0,
+    "exporters": {
+        "exporter": [
+            {
+                "id": "STATSD_Poller",
+                "requires": "statsd",
+                "requires_version": ">=3.3.0",
+                "classname": "phenome.extensions.exporters.statsd.StatsD",
+                "description": "STATSD exporter for poller metrics",
+                "metric_prefix": "phenome",
+                "metric_pattern": "<MODEL_CLASSTYPE>.<OBJECT_MODEL>.<OBJECT_NAME>.<METRIC_ID>",
+                "enabled": "True",
+                "host": "localhost",
+                "port": 8125
+            }
+        ]
+    }
+}

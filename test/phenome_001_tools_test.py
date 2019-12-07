@@ -1,7 +1,8 @@
 # phenome_001_tools_test.py, Copyright (c) 2019, Phenome Project - Nicholas Saparoff <nick.saparoff@gmail.com>
 
-from phenome.test import BaseTest
+import socket
 
+from phenome.test import BaseTest
 from phenome.tools.phenome_builder import PhenomeBuilder
 from phenome_core.core.database.model.api import get_objects_by_model_id
 
@@ -159,7 +160,7 @@ class TestSimulator(BaseTest):
     def setUp(self):
         super(TestSimulator, self).setUp()
 
-    def test_simulator_001(self):
+    def test_simulator_001_HTTP(self):
 
         api_port = str(self.CONST_SIMULATOR_API_TARGET_PORT)
 
@@ -195,5 +196,38 @@ class TestSimulator(BaseTest):
         # compare the data from the responses
         self.assertEqual('Hello World', text_hello_world)
         self.assertEqual('Hello World', json_hello_world['response'])
+
+    def test_simulator_002_UDP(self):
+
+        self.CONST_SIMULATOR_API_TARGET_PORT += 1
+
+        api_port = self.CONST_SIMULATOR_API_TARGET_PORT
+
+        response = None
+
+        message = "Hello World"
+        message_bytes = str.encode(message)
+        server_address_and_port = ("127.0.0.1", api_port)
+
+        # start the simulator
+        simulator = self.startSimulator(None, "UDP_SERVER", api_port)
+
+        try:
+
+            # create socket and send the message
+            socket_udp = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
+            socket_udp.sendto(message_bytes, server_address_and_port)
+
+            # did the UDP server get a Hello World?
+            response = simulator.get_last_query().decode()
+
+        except Exception as ex:
+            print(ex)
+        finally:
+            # MAKE SURE TO PUT A FINALLY AND STOP otherwise there could be hanging threads
+            simulator.stop()
+
+        # compare the response
+        self.assertEqual('Hello World', response)
 
 

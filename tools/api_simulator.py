@@ -10,6 +10,9 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from phenome_core.core.base.basethread import BaseThread
 
 _SIM_DATA = None
+_MSGS_RECEIVED = []
+_SERVER_TYPE = "HTTP"
+
 
 class HttpServer(BaseHTTPRequestHandler):
 
@@ -33,35 +36,41 @@ class HttpServer(BaseHTTPRequestHandler):
 
     def respond(self, request):
 
-        global _SIM_DATA
+        global _SIM_DATA, _MSGS_RECEIVED, _SERVER_TYPE
 
         content = None
         content_type = "text/html"
         data = None
         status_code = 200
 
-        # get the data by path
-        try:
-            data = _SIM_DATA.routes[request]
-        except Exception as ex:
-            print(ex)
-
-        if data is None:
-            status_code = 404
-            content = "No mapping for request in Simulator Data"
+        if _SERVER_TYPE == 'UDP_SERVER':
+            # special case, just return the messages received
+            content = json.dumps(_MSGS_RECEIVED)
+            content_type = "application/json"
         else:
 
-            #print("route:" + self.path + "  -  DATA = " + content)
+            # get the data by path
+            try:
+                data = _SIM_DATA.routes[request]
+            except Exception as ex:
+                print(ex)
 
-            # is data TXT/HTML or JSON?
-            if isinstance(data, dict):
-                content = json.dumps(data)
-                content_type = "application/json"
-            elif "{" in data:
-                # the json must be in string version already
-                content_type = "application/json"
+            if data is None:
+                status_code = 404
+                content = "No mapping for request in Simulator Data"
             else:
-                content = data
+
+                #print("route:" + self.path + "  -  DATA = " + content)
+
+                # is data TXT/HTML or JSON?
+                if isinstance(data, dict):
+                    content = json.dumps(data)
+                    content_type = "application/json"
+                elif "{" in data:
+                    # the json must be in string version already
+                    content_type = "application/json"
+                else:
+                    content = data
 
         self.send_response(status_code)
         self.send_header("Content-type", content_type)
@@ -69,6 +78,7 @@ class HttpServer(BaseHTTPRequestHandler):
         self.wfile.write(bytes(content, "utf-8"))
 
         return
+
 
 class APISimulator(BaseThread):
 
@@ -78,6 +88,7 @@ class APISimulator(BaseThread):
 
         # init defaults
         self.is_json_rpc = False
+        self.is_udp_server = False
         self.listening = False
         self.socket = None
         self.server = None
@@ -95,7 +106,7 @@ class APISimulator(BaseThread):
             epilog="Happy Simulating!")
         parser.add_argument('-port', nargs="?", help='HTTP PORT to listen on', default=80, type=int)
         parser.add_argument('-file', nargs="?", help='Routes file to load', default='sim_data.py', type=str)
-        parser.add_argument('-type', nargs="?", help='Type of server (HTTP, JSON-RPC)', default='HTTP', type=str)
+        parser.add_argument('-type', nargs="?", help='Type of server (HTTP, JSON_RPC, UDP_SERVER)', default='HTTP', type=str)
 
         return parser
 
@@ -115,7 +126,11 @@ class APISimulator(BaseThread):
         if self.socket is not None:
 
             try:
-                closing_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                if self.is_udp_server:
+                    closing_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+                else:
+                    closing_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
                 closing_socket.connect(('0.0.0.0', int(self.port)))
                 closing_socket.shutdown(1)
                 closing_socket.close()
@@ -186,7 +201,7 @@ class APISimulator(BaseThread):
 
     def setup(self, passed_args):
 
-        global _SIM_DATA
+        global _SIM_DATA, _SERVER_TYPE
 
         # build a parser
         parser = self.__build_arg_parser()
@@ -201,12 +216,14 @@ class APISimulator(BaseThread):
         if args.port:
             self.port = args.port
 
-        if args.file:
+        if args.file and (not args.file == 'None'):
             self.filename = args.file
             self._load_simulator_data()
 
         if args.type:
             self.is_json_rpc = (args.type == 'JSON_RPC')
+            self.is_udp_server = (args.type == 'UDP_SERVER')
+            _SERVER_TYPE = args.type
 
         # listen for sigterm signals and call stop if heard
         # signal.signal(signal.SIGTERM, self.stop)
@@ -217,9 +234,51 @@ class APISimulator(BaseThread):
         st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
         print("---------- {} ON PORT {} at {} ----------".format(message, self.port, st))
 
+    def listen_udp(self):
+
+        HOST = ''
+        PORT = int(self.port)
+        BUFFSIZE = 1024
+
+        global _MSGS_RECEIVED
+
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        print ('UDP SOCKET CREATED')
+
+        try:
+
+            self.socket.bind((HOST, PORT))
+            self.listening = True
+
+            self.__output_message("UDP SERVER LISTENING")
+
+            # Listen for incoming datagrams
+
+            while self.listening:
+
+                bytes_from = self.socket.recvfrom(BUFFSIZE)
+                message = bytes_from[0]
+                address = bytes_from[1]
+
+                self.last_request = message
+
+                # add to messages
+                _MSGS_RECEIVED.append(message)
+
+                self.__output_message("UDP Message '{}' from '{}'".format(message, address))
+
+                if self.listening is False:
+                    break
+
+        except socket.error as err:
+            if self.listening:
+                print ('UDP SOCKET ERROR={} MSG={}'.format(str(err.errno), str(err.strerror)))
+
+        print('UDP SOCKET CLOSED')
+
     def listen_rpc(self):
 
-        global _SIM_DATA
+        global _SIM_DATA, _MSGS_RECEIVED
 
         if _SIM_DATA is None:
             print("No Simulator DATA was loaded. Exiting.")
@@ -237,7 +296,7 @@ class APISimulator(BaseThread):
 
             self.listening = True
 
-            print ('RPC SOCKET LISTENING ON PORT {}'.format(self.port))
+            self.__output_message('RPC SOCKET LISTENING')
 
             while self.listening:
 
@@ -248,11 +307,16 @@ class APISimulator(BaseThread):
                 except:
                     pass
 
-                if self.listening == False:
+                if self.listening is False:
                     break
 
                 request_bytes = conn.recv(4096)
                 command = request_bytes.decode()
+
+                self.last_request = command
+
+                # add to messages
+                _MSGS_RECEIVED.append(command)
 
                 if "GET" and "HTTP/1" in command:
                     command = command.split('\r\n')[0].split(" ")[1]
@@ -310,6 +374,8 @@ class APISimulator(BaseThread):
 
         if self.is_json_rpc:
             self.listen_rpc()
+        elif self.is_udp_server:
+            self.listen_udp()
         else:
             self.listen_http()
 
