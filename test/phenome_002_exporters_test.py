@@ -19,13 +19,13 @@ class TestExporters(BaseTest):
 
         return object
 
-    def test_001_statsd(self):
-
-        self.CONST_SIMULATOR_API_TARGET_PORT += 1
-        api_port = self.CONST_SIMULATOR_API_TARGET_PORT
+    def test_001_STATSD_Exporter(self):
 
         # This test will create a StatsD Exporter, test that the Exporter worked using a UDP simulator
         # and will also test the integrity of the EDRs that were exported
+
+        self.CONST_SIMULATOR_API_TARGET_PORT += 1
+        api_port = self.CONST_SIMULATOR_API_TARGET_PORT
 
         config = {
             "id": "STATSD_Exporter",
@@ -52,7 +52,8 @@ class TestExporters(BaseTest):
 
         try:
 
-            # export to StatsD Daemon and wait a sec
+            # export to StatsD Daemon and wait a sec - do this TWICE to force flush (sometimes needed)
+            exporter.export(results)
             exporter.export(results)
             time.sleep(1)
 

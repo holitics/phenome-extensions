@@ -1,6 +1,6 @@
 # phenome_001_tools_test.py, Copyright (c) 2019, Phenome Project - Nicholas Saparoff <nick.saparoff@gmail.com>
 
-import socket
+import socket, time
 
 from phenome.test import BaseTest
 from phenome.tools.phenome_builder import PhenomeBuilder
@@ -214,9 +214,12 @@ class TestSimulator(BaseTest):
 
         try:
 
-            # create socket and send the message
+            # create socket and send the message a couple times
             socket_udp = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
             socket_udp.sendto(message_bytes, server_address_and_port)
+            socket_udp.sendto(message_bytes, server_address_and_port)
+            socket_udp.sendto(message_bytes, server_address_and_port)
+            time.sleep(1)
 
             # did the UDP server get a Hello World?
             response = simulator.get_last_query().decode()

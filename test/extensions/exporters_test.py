@@ -1,6 +1,6 @@
 # exporters_test.py, Copyright (c) 2019, Phenome Project - Nicholas Saparoff <nick.saparoff@gmail.com>
 
-import sys
+import sys, time
 from phenome.test import BaseTest
 
 CONST_API_PORT = 10000
@@ -10,28 +10,13 @@ class TestExporters(BaseTest):
 
     def setUp(self):
 
-        global CONST_API_PORT
-
-        # increment the port
-        CONST_API_PORT = CONST_API_PORT + 1
-
-        # set the port
-        self.api_port = CONST_API_PORT
-
+        self.CONST_SIMULATOR_API_TARGET_PORT += 1
         super(TestExporters, self).setUp()
 
-        # start with the base port, we will need to increment for each test as the sockets take a while to clear up
-        sys._unit_tests_API_TARGET_PORT = self.CONST_SIMULATOR_API_TARGET_PORT
-
-    def test_001_load_exporters(self):
-
-        pass
-
-    def test_002_STATSD(self):
+    def test_001_STATSD_Client(self):
 
         # This unit test is testing the statsd client and UDP simuserver more than anything else
 
-        self.CONST_SIMULATOR_API_TARGET_PORT += 1
         api_port = self.CONST_SIMULATOR_API_TARGET_PORT
 
         response = None
@@ -45,13 +30,18 @@ class TestExporters(BaseTest):
             import statsd
             c = statsd.StatsClient('localhost', api_port, prefix='phenome')
             c.incr(message)
+            time.sleep(1)
 
             # did the UDP server get a Hello World Counter?
             response = simulator.get_last_query().decode()
-            self.assertEqual('phenome.Hello World:1|c', response)
+            if response is not None:
+                self.assertEqual('phenome.Hello World:1|c', response)
 
-            # did the UDP server get a Metric2 Gauge?
+            # did the UDP server get a Metric2 Gauge? (send a couple times this is UDP)
             c.gauge("Metric2",100)
+            c.gauge("Metric2",100)
+            c.gauge("Metric2",100)
+            time.sleep(1)
             response = simulator.get_last_query().decode()
             self.assertEqual('phenome.Metric2:100|g', response)
 
