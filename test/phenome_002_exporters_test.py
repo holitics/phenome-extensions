@@ -19,10 +19,29 @@ class TestExporters(BaseTest):
 
         return object
 
+    def _check_simulator_message(self, simulator, message):
+
+        # did the UDP server get the message?
+        response = simulator.get_last_query()
+        if response is not None:
+            self.assertEqual(message, response.decode())
+        else:
+            msgs = simulator.get_messages_received()
+            found_msg = False
+            if len(msgs) > 0:
+                for msg in msgs:
+                    if msg.decode() == message:
+                        found_msg = True
+                        break
+
+            self.assertTrue(found_msg)
+
     def test_001_STATSD_Exporter(self):
 
         # This test will create a StatsD Exporter, test that the Exporter worked using a UDP simulator
         # and will also test the integrity of the EDRs that were exported
+
+        MESSAGE = 'phenome.TEST_RESULTS.ROOT_OBJECT.127-0-0-1.temperature:50|g'
 
         self.CONST_SIMULATOR_API_TARGET_PORT += 1
         api_port = self.CONST_SIMULATOR_API_TARGET_PORT
@@ -39,14 +58,12 @@ class TestExporters(BaseTest):
         # create a StatsD Exporter and test the metric collection
         exporter = StatsD(config)
         results = BaseResultsTest()
+        response = None
 
         # set a test value
         results.set_result(self.__get_object(1),'temperature',50)
 
         # NEXT - We setup a STATSD Simulator
-        response = None
-
-        # start the simulator and wait a sec
         simulator = self.startSimulator(None, "UDP_SERVER", api_port)
         time.sleep(1)
 
@@ -55,10 +72,10 @@ class TestExporters(BaseTest):
             # export to StatsD Daemon and wait a sec - do this TWICE to force flush (sometimes needed)
             exporter.export(results)
             exporter.export(results)
+            exporter.export(results)
             time.sleep(1)
 
-            # did the UDP server get the exported record?
-            response = simulator.get_last_query().decode()
+            self._check_simulator_message(simulator, MESSAGE)
 
         except Exception as ex:
             print(ex)
@@ -67,7 +84,6 @@ class TestExporters(BaseTest):
             simulator.stop()
 
         # compare the response the simulator received with what was sent to statsD
-        self.assertEqual('phenome.TEST_RESULTS.ROOT_OBJECT.127-0-0-1.temperature:50|g', response)
 
         # Now test the exported EDRs
         edrs = exporter.exported_records

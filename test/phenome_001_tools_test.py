@@ -1,6 +1,6 @@
 # phenome_001_tools_test.py, Copyright (c) 2019, Phenome Project - Nicholas Saparoff <nick.saparoff@gmail.com>
 
-import socket, time
+import socket, time, sys
 
 from phenome.test import BaseTest
 from phenome.tools.phenome_builder import PhenomeBuilder
@@ -158,6 +158,9 @@ class TestPhenomeBuilder(BaseTest):
 class TestSimulator(BaseTest):
 
     def setUp(self):
+
+        self.CONST_SIMULATOR_API_TARGET_PORT += 1
+
         super(TestSimulator, self).setUp()
 
     def test_simulator_001_HTTP(self):
@@ -197,16 +200,16 @@ class TestSimulator(BaseTest):
         self.assertEqual('Hello World', text_hello_world)
         self.assertEqual('Hello World', json_hello_world['response'])
 
-    def test_simulator_002_UDP(self):
 
-        self.CONST_SIMULATOR_API_TARGET_PORT += 1
+
+    def test_simulator_002_UDP(self):
 
         api_port = self.CONST_SIMULATOR_API_TARGET_PORT
 
         response = None
 
-        message = "Hello World"
-        message_bytes = str.encode(message)
+        MESSAGE = "Hello World"
+        message_bytes = str.encode(MESSAGE)
         server_address_and_port = ("127.0.0.1", api_port)
 
         # start the simulator
@@ -222,15 +225,24 @@ class TestSimulator(BaseTest):
             time.sleep(1)
 
             # did the UDP server get a Hello World?
-            response = simulator.get_last_query().decode()
+            response = simulator.get_last_query()
+
+            if response:
+                self.assertEqual(MESSAGE, response.decode())
+            else:
+                msgs = simulator.get_messages_received()
+                found_msg = False
+                if len(msgs)>0:
+                    for msg in msgs:
+                        if msg.decode() == MESSAGE:
+                            found_msg = True
+                            break
+
+                self.assertTrue(found_msg)
 
         except Exception as ex:
             print(ex)
         finally:
             # MAKE SURE TO PUT A FINALLY AND STOP otherwise there could be hanging threads
             simulator.stop()
-
-        # compare the response
-        self.assertEqual('Hello World', response)
-
 

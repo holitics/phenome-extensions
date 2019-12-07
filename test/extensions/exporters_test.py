@@ -13,6 +13,23 @@ class TestExporters(BaseTest):
         self.CONST_SIMULATOR_API_TARGET_PORT += 1
         super(TestExporters, self).setUp()
 
+    def _check_simulator_message(self, simulator, message):
+
+        # did the UDP server get the message?
+        response = simulator.get_last_query()
+        if response is not None:
+            self.assertEqual(message, response.decode())
+        else:
+            msgs = simulator.get_messages_received()
+            found_msg = False
+            if len(msgs) > 0:
+                for msg in msgs:
+                    if msg.decode() == message:
+                        found_msg = True
+                        break
+
+            self.assertTrue(found_msg)
+
     def test_001_STATSD_Client(self):
 
         # This unit test is testing the statsd client and UDP simuserver more than anything else
@@ -20,7 +37,9 @@ class TestExporters(BaseTest):
         api_port = self.CONST_SIMULATOR_API_TARGET_PORT
 
         response = None
-        message = "Hello World"
+        MSG_HELLO = "Hello World"
+        MSG_STATSD_1 = 'phenome.Hello World:1|c'
+        MSG_STATSD_2 = 'phenome.Metric2:100|g'
 
         # start the simulator
         simulator = self.startSimulator(None, "UDP_SERVER", api_port)
@@ -29,21 +48,18 @@ class TestExporters(BaseTest):
 
             import statsd
             c = statsd.StatsClient('localhost', api_port, prefix='phenome')
-            c.incr(message)
-            time.sleep(1)
 
-            # did the UDP server get a Hello World Counter?
-            response = simulator.get_last_query().decode()
-            if response is not None:
-                self.assertEqual('phenome.Hello World:1|c', response)
+            # Now send the messages
+
+            c.incr(MSG_HELLO)
+            time.sleep(1)
+            self._check_simulator_message(MSG_STATSD_1)
 
             # did the UDP server get a Metric2 Gauge? (send a couple times this is UDP)
             c.gauge("Metric2",100)
             c.gauge("Metric2",100)
-            c.gauge("Metric2",100)
             time.sleep(1)
-            response = simulator.get_last_query().decode()
-            self.assertEqual('phenome.Metric2:100|g', response)
+            self._check_simulator_message(MSG_STATSD_2)
 
         except Exception as ex:
             print(ex)

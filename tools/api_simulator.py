@@ -116,6 +116,10 @@ class APISimulator(BaseThread):
     def get_last_response(self):
         return self.last_response
 
+    def get_messages_received(self):
+        global _MSGS_RECEIVED
+        return _MSGS_RECEIVED
+
     def stop(self):
 
         # output the message
