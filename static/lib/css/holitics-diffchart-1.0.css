@@ -1,0 +1,94 @@
+@import url(//fonts.googleapis.com/css?family=Open+Sans:400,700);
+
+svg {
+  font: 14px 'Open Sans';
+}
+
+.modal-chart {
+    max-width: 90%;
+    max-height: 70%;
+    margin: 1.75rem auto;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: rgba(127, 127, 127, 0.3);
+  shape-rendering: crispEdges;
+}
+
+.axis text {
+  fill: #8e8e8e;
+}
+
+.axis .tick line {
+  stroke: rgba(127, 127, 127, 0.1);
+}
+
+.area {
+  stroke-width: 2;
+}
+
+.area.upper,
+.legend .upper {
+  fill: rgba(10, 125, 234, 0.1);
+  stroke: #ffc107;
+  stroke-dasharray: 0.2em;
+}
+
+.area.lower,
+.legend .lower {
+  fill: rgba(10, 125, 234, 0.1);
+  stroke: #ffc107;
+  stroke-dasharray: 0.2em;
+}
+
+.current-line,
+.legend .current-line {
+  fill: rgba(0, 0, 0, 0.0);
+  stroke: #00dcff;
+  stroke-width: 3;
+}
+
+.other-line,
+.legend .other-line {
+  fill: rgba(0, 0, 0, 0.0);
+  stroke: #ffc107;
+  stroke-width: 3;
+  stroke-dasharray: 0.2em;
+}
+
+.legend .legend-bg {
+  font: 10px 'Open Sans';
+  fill: rgba(255, 255, 255, 1.0);
+  stroke: rgba(150, 150, 150, 0.5);
+}
+
+.marker.other .marker-bg,
+.marker.other path {
+  fill: rgba(56, 49, 105, 0.8);
+  stroke: rgba(141, 89, 214, 0.8);
+  stroke-width: 3;
+}
+
+.marker.now .marker-bg,
+.marker.now path {
+  fill: rgba(0, 153, 51, 0.8);
+  stroke: rgba(0, 153, 51, 0.8);
+  stroke-width: 3;
+}
+
+.marker path {
+  fill: none;
+}
+
+.legend text {
+  fill: rgba(127, 127, 127, 0.7);
+  font-weight: bold;
+}
+
+.marker text {
+  fill: #fff;
+  text-anchor: middle;
+  font-weight: bold;
+}

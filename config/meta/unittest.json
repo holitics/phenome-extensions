@@ -48,6 +48,30 @@
                   "ignore_timedelay": "true"
               }
             ]}
+          ],
+          "thought_model": [
+            {
+              "name": "model_one",
+              "description": "predict future of one",
+              "attributes": [
+                {
+                    "algo": "AUTO",
+                    "data_model": [{"data_in": "AUTO", "data_out": "metric_one"}],
+                    "period_minutes": [{"steps_in": 10, "steps_out": 2}]
+                }
+              ]
+            },
+            {
+              "name": "model_two",
+              "description": "predict future of two",
+              "attributes": [
+                {
+                    "algo": "AUTO",
+                    "data_model": [{"data_in": "AUTO", "data_out": "metric_two"}],
+                    "period_minutes": [{"steps_in": 10, "steps_out": 2}]
+                }
+              ]
+            }
           ]
         }
       },

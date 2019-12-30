@@ -12,6 +12,7 @@ function collapse_toggles(obj_id) {
     $('#obj_properties_' + obj_id).empty();
     $('#obj_relations_' + obj_id).empty();
     $('#obj_actions_' + obj_id).empty();
+    $('#obj_predictions_' + obj_id).empty();
 
 }
 
@@ -27,7 +28,33 @@ function object_dialog_toggle(obj_id, button_id) {
 		setup_relations_div(obj_id);
 	} else if (button_id == 3) {
 		setup_actions_div(obj_id);
+	} else if (button_id == 4) {
+		setup_prediction_summary_div(obj_id);
 	}
+	
+}
+
+function setup_prediction_summary_div(obj_id) {
+
+	// build url
+	var url = '/api/v1/get_active_predictions_by_object/' + obj_id + '/0';
+
+	// retrieve prediction data per OBJECT and prediction ID
+	$.getJSON(url, function(data) {
+		populate_predictions_summary_data(data);
+	});
+	
+}
+
+function setup_predictions_chart_div(obj_id, prediction_id) {
+
+	// build url
+	var url = '/api/v1/get_predictions_by_object_and_prediction_ids/' + obj_id + '/' + prediction_id + '/0';
+
+	// retrieve prediction data per OBJECT and prediction ID
+	$.getJSON(url, function(data) {
+		populate_predictions_chart_data(prediction_id, data);
+	});
 	
 }
 
@@ -56,9 +83,7 @@ function setup_actions_div(obj_id) {
 }
 
 function setup_relations_div(obj_id) {
-
 	populate_relations(obj_id);
-
 }
 
 function refresh_object_dialog(obj_id) {

@@ -57,12 +57,9 @@ var populate_properties = function(obj_id, data) {
 	groups = _get_grouped_lists(property_items, 'name');
 	
 	for (var key in groups) {
-
-		content = content + "<h6 class='dropdown-header'><center>-- " + key + " properties --</center></h6>";
-	
 		// populate all the properties for this group
+		content = content + "<h6 class='dropdown-header'><center>-- " + key + " properties --</center></h6>";
 		content = content + _populate_properties(obj_id, data, groups[key], ui_models, enum_values, state_values);
-
 	}
 	
 	content = content + '</form>';
