@@ -27,34 +27,47 @@ function _build_predictive_model_stats_row_contents(key, item, include_error_msg
 
 	result = "";
 
-	accuracy = item['accuracy'];
-	model_state = item['state'];
-	err_msg = item['last_error'];
-	rmse = item['rmse'];
-	last_updated = item['last_update_time'];
+	if (typeof item === 'undefined') {
 
-	if (err_msg === 'undefined') {
+		accuracy = 0.0;
+		model_state = 'INITIALIZED';
 		err_msg = '';
+		badge_value = 'badge-dark';
+		badge_value_accuracy = 'badge-dark';
+
+	} else {
+
+		accuracy = item['accuracy'];
+		model_state = item['state'];
+		err_msg = item['last_error'];
+		rmse = item['rmse'];
+		last_updated = item['last_update_time'];
+
+		if (err_msg === 'undefined') {
+			err_msg = '';
+		}
+
+		badge_value = 'badge-dark';
+		badge_value_accuracy = 'badge-dark';
+
+		if (model_state == 'TESTING') {
+			badge_value = 'badge-primary';
+		} else if (model_state == 'INITIALIZED') {
+			badge_value = 'badge-secondary';
+		} else if (model_state == 'TRAINING') {
+			badge_value = 'badge-info';
+		} else if (model_state == 'OPTIMIZED') {
+			badge_value = 'badge-success';
+		} else if (model_state == 'WAITING') {
+			badge_value = 'badge-warning';
+		}
+
+		accuracy = accuracy.toFixed(2);
+
+		// choose the correct badge for model accuracy
+		badge_value_accuracy = get_badge_accuracy(accuracy);
+
 	}
-	badge_value = 'badge-dark';
-	badge_value_accuracy = 'badge-dark';
-
-	if (model_state=='TESTING') {
-		badge_value = 'badge-primary';
-	} else if (model_state=='INITIALIZED') {
-		badge_value = 'badge-secondary';
-	} else if (model_state=='TRAINING') {
-		badge_value = 'badge-info';
-	} else if (model_state=='OPTIMIZED') {
-		badge_value = 'badge-success';
-	} else if (model_state=='WAITING') {
-		badge_value = 'badge-warning';
-	}
-
-	accuracy = accuracy.toFixed(2);
-
-	// choose the correct badge for model accuracy
-	badge_value_accuracy = get_badge_accuracy(accuracy);
 
 	if (accuracy <= 0) {
 		accuracy = '--.--';
