@@ -70,7 +70,7 @@ class GenericCheck(BaseAction):
             pass
 
         if object_results is None:
-            logger.error("No RESULTS found for input '{}', check ID='{}'".format(input, check_id))
+            logger.warn("No RESULTS found for input '{}', check ID='{}'".format(input, check_id))
             return False
 
         # First, error detection
