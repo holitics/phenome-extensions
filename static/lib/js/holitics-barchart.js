@@ -64,19 +64,20 @@ function buildPlot(json, series_data_columns, yaxis_title, bar_colors) {
     	.attr("height", height + margin.top + margin.bottom);
     
     
+    
 	// Setup the tool tip
     // See original documentation for more details on styling: http://labratrevenge.com/d3-tip/
     var tool_tip = d3.tip()
     	.attr("class", "d3-tip")
       	.offset([-8, 0])
-      	.html(function(d) {
+     	.html(function(d) {
 			var tooltip_txt = build_tooltip(results_data, d.key, d.value['id']);
 			if (tooltip_txt == null) {
 				return null;
 			} else { 
 				return tooltip_txt;
 			}
-      	});
+    	});
     
     // activate the tooltip
     svg.call(tool_tip);
@@ -135,7 +136,7 @@ function buildPlot(json, series_data_columns, yaxis_title, bar_colors) {
       		.attr("width", x1.bandwidth())
       		.attr("height", function(d) { return height - y(d.value['value']); })
       		.attr("fill", function(d) { return z(d.key); })
-			.on("mouseover", tool_tip.show )
+      		.on("mouseover", tool_tip.show )
       		.on("mouseout", tool_tip.hide );
 
 

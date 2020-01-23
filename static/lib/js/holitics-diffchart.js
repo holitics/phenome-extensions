@@ -20,10 +20,15 @@ function addAxesAndLegend (svg, xAxis, yAxis, margin, chartWidth, chartHeight, t
 
   var axes = svg.append('g')
     .attr('clip-path', 'url(#axes-clip)');
+	
+  var tx_str = "translate(" + [0, Math.floor(chartHeight)] + ")";
 
+  // console.log('chartheight:' + chartHeight + ', chartWidth:' + chartWidth + ', legendWidth:' + legendWidth);
+  // console.log('tx-str:'+tx_str);
+  
   axes.append('g')
     .attr('class', 'x axis')
-    .attr('transform', 'translate(0,' + chartHeight + ')')
+	.attr('transform', tx_str)
     .call(xAxis)
     .append('text')
       .attr('y', -20)
@@ -37,7 +42,7 @@ function addAxesAndLegend (svg, xAxis, yAxis, margin, chartWidth, chartHeight, t
 
   var legend = svg.append('g')
     .attr('class', 'legend')
-    .attr('transform', 'translate(' + (legendStartX) + ', 0)');
+    .attr('transform', 'translate(' + (Math.floor(legendStartX)).toString() + ', 0)');
 
   legend.append('rect')
     .attr('class', 'legend-bg')
@@ -299,6 +304,9 @@ function makeChart (data, markers, div_id, title1, title2) {
                 .innerTickSize(-chartHeight).outerTickSize(0).tickPadding(10),
     	yAxis = d3.svg.axis().scale(y).orient('left')
                 .innerTickSize(-chartWidth).outerTickSize(0).tickPadding(10);
+
+	// console.log('chartheight:' + chartHeight + ', chartWidth:' + chartWidth);
+	// console.log('margin-left:' + margin.left + ', margin-top:' + margin.top + ' svgwidth:' + svgWidth + ', svgHeight:' + svgHeight);
 
 	var svg = svg_canvas.append('svg')
     	.attr('width',  svgWidth)

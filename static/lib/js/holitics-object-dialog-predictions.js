@@ -21,15 +21,15 @@ var populate_predictions_summary_data = function(rawData) {
 
 			model_id = obj.model_id;
 			object_id = obj.object_id;
-			metric_id = obj.metric;
+			metric_id = obj.metric_id;
 			model_data = obj.stats
 
 			result = result + "	<tr>";
 
-			if (typeof obj.current !== 'undefined') {
+			if (typeof obj.value !== 'undefined') {
 
-				p_val = obj.predicted;
-				c_val = obj.current;
+				p_val = obj.value_predicted;
+				c_val = obj.value;
 
 				badge_value_accuracy = get_badge_accuracy(get_accuracy_from_values(c_val, p_val));
 
@@ -76,8 +76,14 @@ var populate_predictions_chart_data = function(chartTitle, rawData) {
 
 	predictions.forEach(function(obj) {
 
-		v1 = obj.current;
-		v2 = obj.predicted;
+		// v1 = obj.current;
+		// v2 = obj.predicted;
+
+		// TODO - handle data that may not have value and predicted value together
+
+		v1 = obj.value;
+		v2 = obj.value_predicted;
+
 		vdate = new Date(obj.timestamp); // parseTimestamp(ts);
 
 		// take the last datapoint with both a current and predicted measurement, and call that "now"

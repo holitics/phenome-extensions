@@ -49,7 +49,7 @@ function setup_prediction_summary_div(obj_id) {
 function setup_predictions_chart_div(obj_id, prediction_id) {
 
 	// build url
-	var url = '/api/v1/get_predictions_by_object_and_prediction_ids/' + obj_id + '/' + prediction_id + '/0';
+	var url = '/api/v1/get_predictions_by_object_and_metric_ids/' + obj_id + '/' + prediction_id + '/0';
 
 	// retrieve prediction data per OBJECT and prediction ID
 	$.getJSON(url, function(data) {
